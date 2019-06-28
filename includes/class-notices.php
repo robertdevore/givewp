@@ -54,7 +54,7 @@ class Give_Notices {
 	 */
 	public function __construct() {
 		add_action( 'admin_notices', array( $this, 'render_admin_notices' ), 999 );
-		add_action( 'admin_footer', array( $this, '__reveal_notices' ) );
+		// add_action( 'admin_footer', array( $this, '__reveal_notices' ) );
 		add_action( 'give_dismiss_notices', array( $this, 'dismiss_notices' ) );
 
 		add_action( 'give_frontend_notices', array( $this, 'render_frontend_notices' ), 999 );
