@@ -1129,8 +1129,7 @@ function give_default_cc_address_fields( $form_id ) {
 				<?php if ( give_field_is_required( 'billing_country', $form_id ) ) : ?>
 					<span class="give-required-indicator">*</span>
 				<?php endif; ?>
-				<span class="give-tooltip give-icon give-icon-question"
-				      data-tooltip="<?php esc_attr_e( 'The country for your billing address.', 'give' ); ?>"></span>
+				<?php echo Give()->tooltips->render_help( __( 'The country for your billing address.', 'give' ) ); ?>
 			</label>
 
 			<select
