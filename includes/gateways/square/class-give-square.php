@@ -50,6 +50,8 @@ if ( ! class_exists( 'Give_Square' ) ) {
 			// Include files which are necessary to load in admin but not in context of `is_admin`.
 			$this->include_admin_files();
 
+			require_once GIVE_PLUGIN_DIR . '/includes/gateways/square/includes/helpers.php';
+
 			// Include frontend files.
 			$this->include_frontend_files();
 		}
@@ -66,7 +68,6 @@ if ( ! class_exists( 'Give_Square' ) ) {
 			require_once GIVE_PLUGIN_DIR . '/includes/gateways/square/includes/admin/activation.php';
 			require_once GIVE_PLUGIN_DIR . '/includes/gateways/square/includes/admin/admin-actions.php';
 			require_once GIVE_PLUGIN_DIR . '/includes/gateways/square/includes/admin/admin-filters.php';
-			require_once GIVE_PLUGIN_DIR . '/includes/gateways/square/includes/admin/upgrade-functions.php';
 		}
 
 		/**
