@@ -63,7 +63,10 @@ if ( ! class_exists( 'Give_Square' ) ) {
 		 * @return void
 		 */
 		public function include_admin_files() {
-
+			require_once GIVE_PLUGIN_DIR . '/includes/gateways/square/includes/admin/activation.php';
+			require_once GIVE_PLUGIN_DIR . '/includes/gateways/square/includes/admin/admin-actions.php';
+			require_once GIVE_PLUGIN_DIR . '/includes/gateways/square/includes/admin/admin-filters.php';
+			require_once GIVE_PLUGIN_DIR . '/includes/gateways/square/includes/admin/upgrade-functions.php';
 		}
 
 		/**
