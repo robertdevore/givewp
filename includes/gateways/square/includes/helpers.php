@@ -1,11 +1,12 @@
 <?php
 /**
- * Helper Functions for Give Square Gateway
+ * Helper Functions for Square Core.
  *
- * @package   Give-Square
- * @copyright Copyright (c) 2018, GiveWP
- * @license   https://opensource.org/licenses/gpl-license GNU Public License
- * @since     1.0.0
+ * @package     Give
+ * @sub-package Square Core
+ * @copyright   Copyright (c) 2019, GiveWP
+ * @license     https://opensource.org/licenses/gpl-license GNU Public License
+ * @since       2.6.0
  */
 
 // Exit if accessed directly.
@@ -21,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @param bool $echo    Status to display or not.
  *
  * @access public
- * @since  1.0.0
+ * @since  2.6.0
  *
  * @return string $form
  */
@@ -182,7 +183,7 @@ add_action( 'give_square_cc_form', 'give_square_credit_card_form', 10, 3 );
 /**
  * Outputs the default credit card address fields.
  *
- * @since 1.0.0
+ * @since 2.6.0
  *
  * @param int $form_id The form ID.
  *
@@ -432,7 +433,7 @@ add_action( 'give_square_after_cc_fields', 'give_square_default_cc_address_field
 /**
  * Generate Card Nonce.
  *
- * @since 1.0.0
+ * @since 2.6.0
  *
  * @return string
  */
@@ -452,7 +453,7 @@ function give_square_generate_card_nonce() {
  *
  * @param float $amount Donation Amount.
  *
- * @since 1.0.0
+ * @since 2.6.0
  *
  * @return \SquareConnect\Model\Money
  */
@@ -482,7 +483,7 @@ function give_square_prepare_donation_amount( $amount ) {
 /**
  * Get Application ID.
  *
- * @since 1.0.0
+ * @since 2.6.0
  *
  * @return mixed
  */
@@ -501,7 +502,7 @@ function give_square_get_application_id() {
 /**
  * Get Location ID.
  *
- * @since 1.0.0
+ * @since 2.6.0
  *
  * @return mixed
  */
@@ -523,7 +524,7 @@ function give_square_get_location_id() {
 /**
  * This function is a wrapper to use simply the function for checkout page redirection.
  *
- * @since 1.0.0
+ * @since 2.6.0
  *
  * @param array $args List of arguments.
  *
@@ -543,7 +544,7 @@ function give_square_send_back_to_checkout( $args = array() ) {
 /**
  * This function will check whether Square is connected or not?
  *
- * @since 1.0.0
+ * @since 2.6.0
  *
  * @return bool
  */
@@ -556,7 +557,7 @@ function give_square_is_connected() {
 /**
  * This function will help to get list of business locations.
  *
- * @since 1.0.0
+ * @since 2.6.0
  *
  * @return array
  */
@@ -612,7 +613,7 @@ function give_square_get_business_locations() {
 /**
  * This function is used to check whether manual api keys are enabled or not.
  *
- * @since 1.0.0
+ * @since 2.6.0
  *
  * @return bool
  */
@@ -623,7 +624,7 @@ function give_square_is_manual_api_keys_enabled() {
 /**
  * Check if notice dismissed by admin user or not.
  *
- * @since 1.0.0
+ * @since 2.6.0
  *
  * @return bool
  */
@@ -642,7 +643,7 @@ function give_square_is_connect_notice_dismissed() {
 /**
  * This function prepares the square connect button for reusability.
  *
- * @since 1.0.0
+ * @since 2.6.0
  *
  * @return mixed
  */
@@ -673,7 +674,7 @@ function give_square_connect_button() {
 /**
  * This function will be used to set the input styles.
  *
- * @since 1.0.0
+ * @since 2.6.0
  *
  * @return array
  */
@@ -702,7 +703,7 @@ function give_square_get_input_styles() {
 	 *
 	 * @param array $input_styles List of input styles accepted by Square.
 	 *
-	 * @since 1.0.0
+	 * @since 2.6.0
 	 */
 	return apply_filters( 'give_square_get_input_styles', json_decode( $input_styles ) );
 }
@@ -710,7 +711,7 @@ function give_square_get_input_styles() {
 /**
  * This function will check whether we need to collect billing details or not.
  *
- * @since 1.0.0
+ * @since 2.6.0
  *
  * @return bool
  */
@@ -723,7 +724,7 @@ function give_square_can_collect_billing_details() {
 /**
  * This function is used to get the unique key to encrypt/decrypt the plain text into AES encrypted text and vice versa.
  *
- * @since 1.0.2
+ * @since 2.6.0
  *
  * @return string
  */
@@ -736,7 +737,7 @@ function give_square_get_unique_key() {
  *
  * @param string $text Plain Text.
  *
- * @since 1.0.2
+ * @since 2.6.0
  *
  * @return string
  */
@@ -763,7 +764,7 @@ function give_square_encrypt_string( $text ) {
  *
  * @param string $text Encrypted Text.
  *
- * @since 1.0.2
+ * @since 2.6.0
  *
  * @return string
  */
@@ -787,7 +788,7 @@ function give_square_decrypt_string( $text ) {
 /**
  * This function is used to get the access token provided by Square.
  *
- * @since 1.0.2
+ * @since 2.6.0
  *
  * @return string
  */

@@ -2,10 +2,11 @@
 /**
  * Give Square Gateway Activation
  *
- * @package   Give-Square
- * @copyright Copyright (c) 2018, GiveWP
- * @license   https://opensource.org/licenses/gpl-license GNU Public License
- * @since     1.0.0
+ * @package     Give
+ * @sub-package Square Core
+ * @copyright   Copyright (c) 2019, GiveWP
+ * @license     https://opensource.org/licenses/gpl-license GNU Public License
+ * @since       2.6.0
  */
 
 // Exit if accessed directly.
@@ -19,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @param array $plugin_meta An array of the plugin's metadata.
  * @param string $plugin_file Path to the plugin file, relative to the plugins directory.
  *
- * @since 1.0.0
+ * @since 2.6.0
  *
  * @return array
  */
@@ -60,7 +61,7 @@ add_filter( 'plugin_row_meta', 'give_square_plugin_row_meta', 10, 2 );
 /**
  * Displays the "Give Square Connect" banner.
  *
- * @since 1.0.0
+ * @since 2.6.0
  *
  * @return bool
  */
@@ -118,7 +119,7 @@ add_action( 'admin_notices', 'give_square_connect_maybe_show_banner' );
 /**
  * This function will show notice when business location is not set.
  *
- * @since 1.0.0
+ * @since 2.6.0
  *
  * @return void
  */

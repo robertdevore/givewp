@@ -2,10 +2,11 @@
 /**
  * List of Admin Action Hooks.
  *
- * @package   Give-Square
- * @copyright Copyright (c) 2018, GiveWP
- * @license   https://opensource.org/licenses/gpl-license GNU Public License
- * @since     1.0.0
+ * @package     Give
+ * @sub-package Square Core
+ * @copyright   Copyright (c) 2019, GiveWP
+ * @license     https://opensource.org/licenses/gpl-license GNU Public License
+ * @since       2.6.0
  */
 
 // Exit if accessed directly.
@@ -18,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @param array $settings List of admin settings.
  *
- * @since 1.0.0
+ * @since 2.6.0
  *
  * @return array
  */
@@ -147,7 +148,7 @@ add_filter( 'give_get_settings_gateways', 'give_square_register_settings' );
  *
  * @param array $attr Field Attributes.
  *
- * @since 1.0.0
+ * @since 2.6.0
  */
 function give_square_connect_field( $attr ) {
 
@@ -195,7 +196,7 @@ add_action( 'give_admin_field_square_connect', 'give_square_connect_field' );
  *
  * @param array $attr Field Attributes.
  *
- * @since 1.0.0
+ * @since 2.6.0
  */
 function give_square_location_select_field( $attr ) {
 
@@ -249,7 +250,7 @@ add_action( 'give_admin_field_location_select', 'give_square_location_select_fie
 /**
  * Store oAuth credentials.
  *
- * @since 1.0.0
+ * @since 2.6.0
  *
  * @param array $args List of arguments.
  */
@@ -277,7 +278,7 @@ add_action( 'give_square_is_connected', 'give_square_store_oauth_credentials' );
 /**
  * Disconnect Square oAuth.
  *
- * @since 1.0.0
+ * @since 2.6.0
  *
  * @param array $args List of arguments.
  */
@@ -310,7 +311,7 @@ add_action( 'give_square_disconnect_oauth', 'give_square_disconnect_oauth' );
 /**
  * Register admin notices.
  *
- * @since 1.0.0
+ * @since 2.6.0
  */
 function give_square_register_admin_notices() {
 
@@ -360,7 +361,7 @@ add_action( 'admin_notices', 'give_square_register_admin_notices', - 1 );
 /**
  * Refresh business locations list by deleting cache.
  *
- * @since 1.0.0
+ * @since 2.6.0
  *
  * @return void
  */
@@ -375,7 +376,7 @@ add_action( 'give_square_refresh_locations', 'give_square_refresh_locations' );
  * Process refund in Square.
  *
  * @access public
- * @since  1.0.0
+ * @since  2.6.0
  *
  * @param string $donation_id Payment ID.
  * @param string $new_status  New Donation Status.
@@ -465,7 +466,7 @@ add_action( 'give_update_payment_status', 'give_square_process_refund', 200, 3 )
  *
  * @param int $donation_id Donation ID.
  *
- * @since 1.0.0
+ * @since 2.6.0
  *
  * @return void
  */
@@ -495,7 +496,7 @@ add_action( 'give_view_donation_details_totals_after', 'give_square_opt_square_r
 /**
  * Given a transaction ID, generate a link to the Square transaction ID details
  *
- * @since  1.0.0
+ * @since  2.6.0
  *
  * @param string $transaction_id The Transaction ID.
  * @param int    $payment_id The payment ID for this transaction.
@@ -534,7 +535,7 @@ add_filter( 'give_payment_details_transaction_id-square', 'give_square_link_tran
 /**
  * Show notice if test mode enabled
  *
- * @since 1.0.3
+ * @since 2.6.0
  */
 function give_square_admin_notices() {
 	// Show info notice to admin when test mode is enabled and admin is not square setting page.
@@ -589,7 +590,7 @@ add_action( 'give_admin_settings_sanitize_option', 'give_square_admin_sanitize_s
 /**
  * This AJAX function ensure that the Square account is disconnected properly.
  *
- * @since 1.0.4
+ * @since 2.6.0
  *
  * @return void
  */

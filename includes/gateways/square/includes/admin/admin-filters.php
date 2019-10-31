@@ -2,10 +2,11 @@
 /**
  * List of Admin Filter Hooks.
  *
- * @package   Give-Square
- * @copyright Copyright (c) 2018, GiveWP
- * @license   https://opensource.org/licenses/gpl-license GNU Public License
- * @since     1.0.0
+ * @package     Give
+ * @sub-package Square Core
+ * @copyright   Copyright (c) 2019, GiveWP
+ * @license     https://opensource.org/licenses/gpl-license GNU Public License
+ * @since       2.6.0
  */
 
 // Exit if accessed directly.
@@ -18,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @param array $sections List of sections.
  *
- * @since 1.0.0
+ * @since 2.6.0
  *
  * @return mixed
  */
@@ -36,7 +37,7 @@ add_filter( 'give_get_sections_gateways', 'give_square_register_sections' );
  *
  * @param array $section List of sections.
  *
- * @since 1.0.0
+ * @since 2.6.0
  *
  * @return mixed
  */
@@ -55,7 +56,7 @@ add_filter( 'give_get_sections_advanced', 'give_square_connect_add_advanced_sect
  *
  * @param array $settings List of settings.
  *
- * @since 1.0.0
+ * @since 2.6.0
  *
  * @return mixed
  */
@@ -125,7 +126,7 @@ add_filter( 'give_get_settings_advanced', 'give_square_register_advanced_setting
  *
  * @param array $schedules Cron Interval Schedules.
  *
- * @since 1.0.0
+ * @since 2.6.0
  *
  * @return mixed
  */
