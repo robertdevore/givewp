@@ -621,6 +621,17 @@ if ( ! class_exists( 'Give' ) ) :
 				require_once GIVE_PLUGIN_DIR . 'includes/gateways/stripe/class-give-stripe.php';
 			}
 
+			// This conditional check will add backward compatibility to older Square versions (i.e. < 1.0.4) when used with Give 2.6.0.
+			if (
+				! defined( 'GIVE_SQUARE_VERSION' ) ||
+				(
+					defined( 'GIVE_SQUARE_VERSION' ) &&
+					version_compare( GIVE_SQUARE_VERSION, '1.0.4', '>=' )
+				)
+			) {
+				require_once GIVE_PLUGIN_DIR . 'includes/gateways/square/class-give-square.php';
+			}
+
 		}
 
 		/**
