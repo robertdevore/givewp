@@ -15,50 +15,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Plugin row meta links
- *
- * @param array $plugin_meta An array of the plugin's metadata.
- * @param string $plugin_file Path to the plugin file, relative to the plugins directory.
- *
- * @since 2.6.0
- *
- * @return array
- */
-function give_square_plugin_row_meta( $plugin_meta, $plugin_file ) {
-
-	if ( $plugin_file !== GIVE_SQUARE_BASENAME ) {
-		return $plugin_meta;
-	}
-
-	$new_meta_links = array(
-		sprintf(
-			'<a href="%1$s" target="_blank">%2$s</a>',
-			esc_url( add_query_arg( array(
-					'utm_source'   => 'plugins-page',
-					'utm_medium'   => 'plugin-row',
-					'utm_campaign' => 'admin',
-				), 'http://docs.givewp.com/addon-square' )
-			),
-			__( 'Documentation', 'give-square' )
-		),
-		sprintf(
-			'<a href="%1$s" target="_blank">%2$s</a>',
-			esc_url( add_query_arg( array(
-					'utm_source'   => 'plugins-page',
-					'utm_medium'   => 'plugin-row',
-					'utm_campaign' => 'admin',
-				), 'https://givewp.com/addons/' )
-			),
-			__( 'Add-ons', 'give-square' )
-		),
-	);
-
-	return array_merge( $plugin_meta, $new_meta_links );
-}
-
-add_filter( 'plugin_row_meta', 'give_square_plugin_row_meta', 10, 2 );
-
-/**
  * Displays the "Give Square Connect" banner.
  *
  * @since 2.6.0
