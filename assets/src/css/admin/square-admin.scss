@@ -1,0 +1,49 @@
+.give-square-connected {
+	color: #227528;
+}
+
+.give-square-not-connected {
+	.give-field-description {
+		span {
+			color: #FF0000;
+		}
+	}
+}
+
+.give-square-btn {
+	background-color: #383F49;
+	display: inline-block;
+	padding: 6px 15px 6px 10px;
+	margin: 0;
+	border-radius: 5px;
+	font-size: 14px;
+	color: #fff;
+	text-decoration: none;
+
+	&:hover {
+		color: #fff;
+	}
+
+	&:focus {
+		color: #fff;
+	}
+
+	span {
+		margin: 0 0 0 8px;
+	}
+
+	img {
+		height: 16px;
+		width: 16px;
+		margin: 0 0;
+		position: relative;
+		top: 2px;
+	}
+}
+
+/* Square Connect Banner */
+#give-square-connect-banner {
+	p {
+		font-size: 16px;
+	}
+}
