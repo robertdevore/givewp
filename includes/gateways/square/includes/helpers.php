@@ -662,7 +662,7 @@ function give_square_connect_button() {
 		'<a href="%1$s" id="give-square-connect-btn" class="give-square-btn" title="%2$s"><img src="%3$s" alt="%4$s" /><span>%5$s</span></a>',
 		esc_url_raw( $connect_url ),
 		__( 'Connect your site with Square\'s easy onboarding process.', 'give-square' ),
-		esc_url_raw( GIVE_PLUGIN_URL . 'assets/dist/images/square.svg' ),
+		esc_url_raw( GIVE_PLUGIN_URL . 'assets/dist/images/admin/square.svg' ),
 		__( 'Square Payment Gateway.', 'give-square' ),
 		__( 'Connect to Square', 'give-square' )
 	);
