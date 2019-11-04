@@ -816,7 +816,7 @@ function give_square_get_host_url() {
 	$host = 'https://connect.squareup.com';
 
 	if ( give_is_test_mode() ) {
-		$host = 'https://connect.squareup.com';
+		$host = 'https://connect.squareupsandbox.com';
 	}
 
 	return $host;
