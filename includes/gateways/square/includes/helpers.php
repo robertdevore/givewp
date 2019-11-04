@@ -803,3 +803,21 @@ function give_square_get_access_token() {
 
 	return $access_token;
 }
+
+/**
+ * This function is used to get host URL.
+ *
+ * @since 2.6.0
+ *
+ * @return string
+ */
+function give_square_get_host_url() {
+
+	$host = 'https://connect.squareup.com';
+
+	if ( give_is_test_mode() ) {
+		$host = 'https://connect.squareup.com';
+	}
+
+	return $host;
+}
