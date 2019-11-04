@@ -50,6 +50,11 @@ if ( ! class_exists( 'Give_Square' ) ) {
 			// Include files which are necessary to load in admin but not in context of `is_admin`.
 			$this->include_admin_files();
 
+			// Load Square SDK only when Square gateway is active.
+			if ( give_is_gateway_active( 'square' ) ) {
+				require_once GIVE_PLUGIN_DIR . '/vendor/square/connect/autoload.php';
+			}
+
 			require_once GIVE_PLUGIN_DIR . '/includes/gateways/square/includes/helpers.php';
 
 			// Include frontend files.
