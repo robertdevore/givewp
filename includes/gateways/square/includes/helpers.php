@@ -555,6 +555,24 @@ function give_square_is_connected() {
 }
 
 /**
+ * This function is used to set default Square configuration before making any API calls to Square.
+ *
+ * @since 2.6.0
+ *
+ * @return \SquareConnect\ApiClient
+ */
+function give_square_set_default_configuration() {
+
+	// Set the Access Token prior to any API calls.
+	$api_configuration = new \SquareConnect\Configuration();
+	$api_configuration->setHost( give_square_get_host_url() );
+	$api_configuration->setAccessToken( give_square_get_access_token() );
+
+	// Return API client for authorizing API calls.
+	return new \SquareConnect\ApiClient( $api_configuration );
+}
+
+/**
  * This function will help to get list of business locations.
  *
  * @since 2.6.0
@@ -574,10 +592,8 @@ function give_square_get_business_locations() {
 
 		try {
 
-			// Set the Access Token prior to any API calls.
-			\SquareConnect\Configuration::getDefaultConfiguration()->setAccessToken( Give_Square_Gateway::get_access_token() );
-
-			$location_api   = new \SquareConnect\Api\LocationsApi();
+			$api_client     = give_square_set_default_configuration();
+			$location_api   = new \SquareConnect\Api\LocationsApi( $api_client );
 			$locations_list = $location_api->listLocations()->getLocations();
 
 			foreach ( $locations_list as $location ) {
