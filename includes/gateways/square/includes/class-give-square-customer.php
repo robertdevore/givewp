@@ -97,9 +97,6 @@ class Give_Square_Customer {
 			// Set address model to customer.
 			$customer->setAddress( $billing_address );
 
-			// Set Purchase Key of donation as reference ID.
-			$customer->setReferenceId( $donation_data['purchase_key'] );
-
 			try {
 				$result      = $this->customer_api->createCustomer( $customer );
 
