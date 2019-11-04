@@ -37,9 +37,8 @@ class Give_Square_Customer {
 	public function __construct() {
 
 		// Set the Access Token prior to any API calls.
-		\SquareConnect\Configuration::getDefaultConfiguration()->setAccessToken( give_square_get_access_token() );
-
-		$this->customer_api = new SquareConnect\Api\CustomersApi();
+		$api_client         = give_square_set_default_configuration();
+		$this->customer_api = new SquareConnect\Api\CustomersApi( $api_client );
 	}
 
 	/**
