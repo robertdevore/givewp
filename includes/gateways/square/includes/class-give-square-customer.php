@@ -56,7 +56,13 @@ class Give_Square_Customer {
 		$donor_id             = give_get_payment_donor_id( $donation_data['donation_id'] );
 		$existing_customer_id = give_get_meta( $donor_id, '_give_square_donor_customer_id', true );
 
-		if ( ! $this->retrieve( $existing_customer_id ) ) {
+		if (
+			empty( $existing_customer_id ) ||
+			(
+				! empty( $existing_customer_id ) &&
+				! $this->retrieve( $existing_customer_id )
+			)
+		) {
 
 			$first_name = ! empty( $donation_data['user_info']['first_name'] ) ? $donation_data['user_info']['first_name'] : '';
 			$last_name  = ! empty( $donation_data['user_info']['last_name'] ) ? $donation_data['user_info']['last_name'] : '';
@@ -93,6 +99,7 @@ class Give_Square_Customer {
 
 			try {
 				$result      = $this->customer_api->createCustomer( $customer );
+
 				$customer_id = $result->getCustomer()->getId();
 
 				// Update customer id to donor.
