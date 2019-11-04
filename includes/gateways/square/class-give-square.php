@@ -79,8 +79,11 @@ if ( ! class_exists( 'Give_Square' ) ) {
 		 * @return void
 		 */
 		public function include_frontend_files() {
-
-
+			require_once GIVE_PLUGIN_DIR . '/includes/gateways/square/includes/scripts.php';
+			require_once GIVE_PLUGIN_DIR . '/includes/gateways/square/includes/actions.php';
+			require_once GIVE_PLUGIN_DIR . '/includes/gateways/square/includes/filters.php';
+			require_once GIVE_PLUGIN_DIR . '/includes/gateways/square/includes/class-give-square-customer.php';
+			require_once GIVE_PLUGIN_DIR . '/includes/gateways/square/includes/class-give-square-gateway.php';
 		}
 
 		/**
