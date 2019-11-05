@@ -821,6 +821,25 @@ function give_square_get_access_token() {
 }
 
 /**
+ * This function is used to get host.
+ *
+ * @since 2.6.0
+ *
+ * @return string
+ */
+function give_square_get_host() {
+
+	$host = 'squareup.com';
+
+	// For test mode.
+	if ( give_is_test_mode() ) {
+		$host = 'squareupsandbox.com';
+	}
+
+	return $host;
+}
+
+/**
  * This function is used to get host URL.
  *
  * @since 2.6.0
@@ -829,11 +848,7 @@ function give_square_get_access_token() {
  */
 function give_square_get_host_url() {
 
-	$host = 'https://connect.squareup.com';
+	$host = give_square_get_host();
 
-	if ( give_is_test_mode() ) {
-		$host = 'https://connect.squareupsandbox.com';
-	}
-
-	return $host;
+	return "https://connect.{$host}";
 }
