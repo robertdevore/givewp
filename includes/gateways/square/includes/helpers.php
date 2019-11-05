@@ -47,7 +47,7 @@ function give_square_credit_card_form( $form_id, $args, $echo = true ) {
 	?>
 
 	<fieldset id="give_cc_fields" class="give-do-validate">
-		<legend><?php esc_html_e( 'Credit Card Info', 'give-square' ); ?></legend>
+		<legend><?php esc_html_e( 'Credit Card Info', 'give' ); ?></legend>
         <?php
         $application_id = give_square_get_application_id();
         if ( empty( $application_id ) ) {
@@ -59,7 +59,7 @@ function give_square_credit_card_form( $form_id, $args, $echo = true ) {
              '%1$s <a href="%2$s">%3$s</a>',
                     __( 'Square is not set up yet to accept payments. Please configure the gateway in order to accept donations. If you\'re having trouble please review', '' ),
                     esc_url( 'http://docs.givewp.com/addon-square' ),
-                    __( 'Give\'s Square documentation.', 'give-square' )
+                    __( 'Give\'s Square documentation.', 'give' )
                 )
             );
 	        return false;
@@ -67,24 +67,24 @@ function give_square_credit_card_form( $form_id, $args, $echo = true ) {
 
         // Show frontend notice when site not accessed with SSL.
         if ( ! is_ssl() ) {
-	        Give()->notices->print_frontend_notice( __( 'This page requires a valid SSL certificate for secure donations. Please try accessing this page with HTTPS in order to load Credit Card fields.', 'give-square' ) );
+	        Give()->notices->print_frontend_notice( __( 'This page requires a valid SSL certificate for secure donations. Please try accessing this page with HTTPS in order to load Credit Card fields.', 'give' ) );
 	        return false;
         }
         ?>
         <div id="give_secure_site_wrapper">
             <span class="give-icon padlock"></span>
             <span>
-                <?php esc_attr_e( 'This is a secure SSL encrypted payment.', 'give-square' ); ?>
+                <?php esc_attr_e( 'This is a secure SSL encrypted payment.', 'give' ); ?>
             </span>
         </div>
 
 		<div id="give-card-number-wrap" class="<?php echo esc_attr( $card_number_class ); ?>">
 			<div>
 				<label for="give-card-number-field-<?php echo esc_html( $id_prefix ); ?>" class="give-label">
-					<?php esc_attr_e( 'Card Number', 'give-square' ); ?>
+					<?php esc_attr_e( 'Card Number', 'give' ); ?>
 					<span class="give-required-indicator">*</span>
 					<span class="give-tooltip give-icon give-icon-question"
-						data-tooltip="<?php esc_attr_e( 'The (typically) 16 digits on the front of your credit card.', 'give-square' ); ?>"></span>
+						data-tooltip="<?php esc_attr_e( 'The (typically) 16 digits on the front of your credit card.', 'give' ); ?>"></span>
 					<span class="card-type"></span>
 				</label>
 				<div id="give-card-number-field-<?php echo esc_html( $id_prefix ); ?>" class="input empty give-square-cc-field give-square-card-number-field"></div>
@@ -94,10 +94,10 @@ function give_square_credit_card_form( $form_id, $args, $echo = true ) {
 		<div id="give-card-cvc-wrap" class="<?php echo esc_attr( $card_cvc_class ); ?>">
 			<div>
 				<label for="give-card-cvc-field-<?php echo esc_html( $id_prefix ); ?>" class="give-label">
-					<?php esc_attr_e( 'CVC', 'give-square' ); ?>
+					<?php esc_attr_e( 'CVC', 'give' ); ?>
 					<span class="give-required-indicator">*</span>
 					<span class="give-tooltip give-icon give-icon-question"
-						data-tooltip="<?php esc_attr_e( 'The 3 digit (back) or 4 digit (front) value on your card.', 'give-square' ); ?>"></span>
+						data-tooltip="<?php esc_attr_e( 'The 3 digit (back) or 4 digit (front) value on your card.', 'give' ); ?>"></span>
 				</label>
 				<div id="give-card-cvc-field-<?php echo esc_html( $id_prefix ); ?>" class="input empty give-square-cc-field give-square-card-cvc-field"></div>
 			</div>
@@ -108,10 +108,10 @@ function give_square_credit_card_form( $form_id, $args, $echo = true ) {
             ?>
             <div id="give-card-name-wrap" class="<?php echo esc_attr( $card_name_class ); ?>">
                 <label for="card_name" class="give-label">
-                    <?php esc_attr_e( 'Cardholder Name', 'give-square' ); ?>
+                    <?php esc_attr_e( 'Cardholder Name', 'give' ); ?>
                     <span class="give-required-indicator">*</span>
                     <span class="give-tooltip give-icon give-icon-question"
-                          data-tooltip="<?php esc_attr_e( 'The name of the credit card account holder.', 'give-square' ); ?>"></span>
+                          data-tooltip="<?php esc_attr_e( 'The name of the credit card account holder.', 'give' ); ?>"></span>
                 </label>
 
                 <input
@@ -120,7 +120,7 @@ function give_square_credit_card_form( $form_id, $args, $echo = true ) {
                         id="card_name"
                         name="card_name"
                         class="card-name give-input required"
-                        placeholder="<?php esc_attr_e( 'Cardholder Name', 'give-square' ); ?>"
+                        placeholder="<?php esc_attr_e( 'Cardholder Name', 'give' ); ?>"
                 />
             </div>
             <?php
@@ -132,10 +132,10 @@ function give_square_credit_card_form( $form_id, $args, $echo = true ) {
 		<div id="give-card-expiration-wrap" class="<?php echo esc_attr( $card_exp_class ); ?>">
 			<div>
 				<label for="give-card-expiration-field-<?php echo esc_html( $id_prefix ); ?>" class="give-label">
-					<?php esc_attr_e( 'Expiration', 'give-square' ); ?>
+					<?php esc_attr_e( 'Expiration', 'give' ); ?>
 					<span class="give-required-indicator">*</span>
 					<span class="give-tooltip give-icon give-icon-question"
-						data-tooltip="<?php esc_attr_e( 'The date your credit card expires, typically on the front of the card.', 'give-square' ); ?>"></span>
+						data-tooltip="<?php esc_attr_e( 'The date your credit card expires, typically on the front of the card.', 'give' ); ?>"></span>
 				</label>
 
 				<div id="give-card-expiration-field-<?php echo esc_html( $id_prefix ); ?>" class="input empty give-square-cc-field give-square-card-expiration-field"></div>
@@ -147,9 +147,9 @@ function give_square_credit_card_form( $form_id, $args, $echo = true ) {
             ?>
             <div id="give-card-zip-wrap" class="<?php echo esc_attr( $card_zip_class ); ?>">
                 <label for="card_zip" class="give-label">
-			        <?php esc_attr_e('Zip / Postal Code', 'give-square'); ?>
+			        <?php esc_attr_e('Zip / Postal Code', 'give'); ?>
                     <span class="give-required-indicator">*</span>
-			        <?php echo Give()->tooltips->render_help(__('The ZIP Code or postal code for your billing address.', 'give-square')); ?>
+			        <?php echo Give()->tooltips->render_help(__('The ZIP Code or postal code for your billing address.', 'give')); ?>
                 </label>
 
                 <div id="give-square-card-zip-<?php echo esc_html($id_prefix); ?>"
@@ -210,7 +210,7 @@ function give_square_default_cc_address_fields( $form_id, $args ) {
 	<fieldset id="give_cc_address" class="cc-address">
 
 		<legend>
-			<?php echo apply_filters( 'give_billing_details_fieldset_heading', esc_html__( 'Billing Details', 'give-square' ) ); ?>
+			<?php echo apply_filters( 'give_billing_details_fieldset_heading', esc_html__( 'Billing Details', 'give' ) ); ?>
 		</legend>
 
 		<?php
@@ -248,7 +248,7 @@ function give_square_default_cc_address_fields( $form_id, $args ) {
 			$selected_country = $give_user_info['billing_country'];
 		}
 
-		$label        = __( 'State', 'give-square' );
+		$label        = __( 'State', 'give' );
 		$states_label = give_get_states_label();
 
 		// Check if $country code exists in the array key for states label.
@@ -266,12 +266,12 @@ function give_square_default_cc_address_fields( $form_id, $args ) {
 		?>
 		<p id="give-card-country-wrap" class="form-row form-row-wide">
 			<label for="billing_country" class="give-label">
-				<?php esc_html_e( 'Country', 'give-square' ); ?>
+				<?php esc_html_e( 'Country', 'give' ); ?>
 				<?php if ( give_field_is_required( 'billing_country', $form_id ) ) : ?>
 					<span class="give-required-indicator">*</span>
 				<?php endif; ?>
 				<span class="give-tooltip give-icon give-icon-question"
-						data-tooltip="<?php esc_attr_e( 'The country for your billing address.', 'give-square' ); ?>"></span>
+						data-tooltip="<?php esc_attr_e( 'The country for your billing address.', 'give' ); ?>"></span>
 			</label>
 
 			<select
@@ -291,13 +291,13 @@ function give_square_default_cc_address_fields( $form_id, $args ) {
 
 		<p id="give-card-address-wrap" class="form-row form-row-wide">
 			<label for="card_address" class="give-label">
-				<?php _e( 'Address 1', 'give-square' ); ?>
+				<?php _e( 'Address 1', 'give' ); ?>
 				<?php
 				if ( give_field_is_required( 'card_address', $form_id ) ) :
 				?>
 					<span class="give-required-indicator">*</span>
 				<?php endif; ?>
-				<?php echo Give()->tooltips->render_help( __( 'The primary billing address for your credit card.', 'give-square' ) ); ?>
+				<?php echo Give()->tooltips->render_help( __( 'The primary billing address for your credit card.', 'give' ) ); ?>
 			</label>
 
 			<input
@@ -306,7 +306,7 @@ function give_square_default_cc_address_fields( $form_id, $args ) {
 					name="card_address"
 					autocomplete="address-line1"
 					class="card-address give-input<?php echo( give_field_is_required( 'card_address', $form_id ) ? ' required' : '' ); ?>"
-					placeholder="<?php _e( 'Address line 1', 'give-square' ); ?>"
+					placeholder="<?php _e( 'Address line 1', 'give' ); ?>"
 					value="<?php echo isset( $give_user_info['card_address'] ) ? $give_user_info['card_address'] : ''; ?>"
 				<?php echo( give_field_is_required( 'card_address', $form_id ) ? '  required aria-required="true" ' : '' ); ?>
 			/>
@@ -314,11 +314,11 @@ function give_square_default_cc_address_fields( $form_id, $args ) {
 
 		<p id="give-card-address-2-wrap" class="form-row form-row-wide">
 			<label for="card_address_2" class="give-label">
-				<?php _e( 'Address 2', 'give-square' ); ?>
+				<?php _e( 'Address 2', 'give' ); ?>
 				<?php if ( give_field_is_required( 'card_address_2', $form_id ) ) : ?>
 					<span class="give-required-indicator">*</span>
 				<?php endif; ?>
-				<?php echo Give()->tooltips->render_help( __( '(optional) The suite, apartment number, post office box (etc) associated with your billing address.', 'give-square' ) ); ?>
+				<?php echo Give()->tooltips->render_help( __( '(optional) The suite, apartment number, post office box (etc) associated with your billing address.', 'give' ) ); ?>
 			</label>
 
 			<input
@@ -327,7 +327,7 @@ function give_square_default_cc_address_fields( $form_id, $args ) {
 					name="card_address_2"
 					autocomplete="address-line2"
 					class="card-address-2 give-input<?php echo( give_field_is_required( 'card_address_2', $form_id ) ? ' required' : '' ); ?>"
-					placeholder="<?php _e( 'Address line 2', 'give-square' ); ?>"
+					placeholder="<?php _e( 'Address line 2', 'give' ); ?>"
 					value="<?php echo isset( $give_user_info['card_address_2'] ) ? $give_user_info['card_address_2'] : ''; ?>"
 				<?php echo( give_field_is_required( 'card_address_2', $form_id ) ? ' required aria-required="true" ' : '' ); ?>
 			/>
@@ -335,11 +335,11 @@ function give_square_default_cc_address_fields( $form_id, $args ) {
 
 		<p id="give-card-city-wrap" class="form-row form-row-wide">
 			<label for="card_city" class="give-label">
-				<?php _e( 'City', 'give-square' ); ?>
+				<?php _e( 'City', 'give' ); ?>
 				<?php if ( give_field_is_required( 'card_city', $form_id ) ) : ?>
 					<span class="give-required-indicator">*</span>
 				<?php endif; ?>
-				<?php echo Give()->tooltips->render_help( __( 'The city for your billing address.', 'give-square' ) ); ?>
+				<?php echo Give()->tooltips->render_help( __( 'The city for your billing address.', 'give' ) ); ?>
 			</label>
 			<input
 					type="text"
@@ -347,7 +347,7 @@ function give_square_default_cc_address_fields( $form_id, $args ) {
 					name="card_city"
 					autocomplete="address-level3"
 					class="card-city give-input<?php echo( give_field_is_required( 'card_city', $form_id ) ? ' required' : '' ); ?>"
-					placeholder="<?php _e( 'City', 'give-square' ); ?>"
+					placeholder="<?php _e( 'City', 'give' ); ?>"
 					value="<?php echo isset( $give_user_info['card_city'] ) ? $give_user_info['card_city'] : ''; ?>"
 				<?php echo( give_field_is_required( 'card_city', $form_id ) ? ' required aria-required="true" ' : '' ); ?>
 			/>
@@ -363,7 +363,7 @@ function give_square_default_cc_address_fields( $form_id, $args ) {
 					<span class="give-required-indicator <?php echo( array_key_exists( $selected_country, $states_not_required_country_list ) ? 'give-hidden' : '' ); ?> ">*</span>
 				<?php endif; ?>
 				<span class="give-tooltip give-icon give-icon-question"
-						data-tooltip="<?php esc_attr_e( 'The state, province, or county for your billing address.', 'give-square' ); ?>"></span>
+						data-tooltip="<?php esc_attr_e( 'The state, province, or county for your billing address.', 'give' ); ?>"></span>
 			</label>
 			<?php
 
@@ -389,11 +389,11 @@ function give_square_default_cc_address_fields( $form_id, $args ) {
 
 		<p id="give-card-zip-wrap" class="form-row form-row-last form-row-responsive">
 			<label for="card_zip" class="give-label">
-				<?php _e( 'Zip / Postal Code', 'give-square' ); ?>
+				<?php _e( 'Zip / Postal Code', 'give' ); ?>
 				<?php if ( give_field_is_required( 'card_zip', $form_id ) ) : ?>
 					<span class="give-required-indicator">*</span>
 				<?php endif; ?>
-				<?php echo Give()->tooltips->render_help( __( 'The ZIP Code or postal code for your billing address.', 'give-square' ) ); ?>
+				<?php echo Give()->tooltips->render_help( __( 'The ZIP Code or postal code for your billing address.', 'give' ) ); ?>
 			</label>
 
 			<input

@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function give_square_register_sections( $sections ) {
 
-	$sections['square-settings'] = __( 'Square Settings', 'give-square' );
+	$sections['square-settings'] = __( 'Square Settings', 'give' );
 
 	return $sections;
 }
@@ -42,7 +42,7 @@ add_filter( 'give_get_sections_gateways', 'give_square_register_sections' );
  * @return mixed
  */
 function give_square_connect_add_advanced_section( $section ) {
-	$section['square'] = __( 'Square', 'give-square' );
+	$section['square'] = __( 'Square', 'give' );
 
 	return $section;
 }
@@ -82,23 +82,23 @@ function give_square_register_advanced_settings( $settings ) {
 					'type' => 'title',
 				),
 				array(
-					'name'    => __( 'Square API Keys', 'give-square' ),
-					'desc'    => __( 'Enable if you would like to use your own API keys instead of Square Connect via OAuth API.', 'give-square' ),
+					'name'    => __( 'Square API Keys', 'give' ),
+					'desc'    => __( 'Enable if you would like to use your own API keys instead of Square Connect via OAuth API.', 'give' ),
 					'id'      => 'square_api_keys',
 					'type'    => 'radio_inline',
 					'default' => 'disabled',
 					'options' => array(
-						'enabled'  => __( 'Enabled', 'give-square' ),
-						'disabled' => __( 'Disabled', 'give-square' ),
+						'enabled'  => __( 'Enabled', 'give' ),
+						'disabled' => __( 'Disabled', 'give' ),
 					),
 				),
 				array(
-					'name'          => __( 'Square Styles', 'give-square' ),
+					'name'          => __( 'Square Styles', 'give' ),
 					'desc'          => sprintf(
 						'%1$s <a href="%2$s" target="_blank">%3$s</a>.',
-						__( 'Edit the properties above to match the look and feel of your WordPress theme. These styles will be applied to Square Credit Card fields including Card Number, CVC and Expiration. Any valid CSS property can be defined, however, it must be formatted as JSON, not CSS. For more information on Styling Square CC fields please see this ', 'give-square' ),
+						__( 'Edit the properties above to match the look and feel of your WordPress theme. These styles will be applied to Square Credit Card fields including Card Number, CVC and Expiration. Any valid CSS property can be defined, however, it must be formatted as JSON, not CSS. For more information on Styling Square CC fields please see this ', 'give' ),
 						esc_url_raw( 'https://docs.connect.squareup.com/payments/sqpaymentform/overview' ),
-						__( 'article', 'give-square' )
+						__( 'article', 'give' )
 					),
 					'wrapper_class' => 'give-square-styles-wrap',
 					'id'            => 'square_styles',
@@ -133,7 +133,7 @@ add_filter( 'give_get_settings_advanced', 'give_square_register_advanced_setting
 function give_square_add_monthly_cron_interval( $schedules ) {
 	$schedules['monthly'] = array(
 		'interval' => 2592000,
-		'display'  => esc_html__( 'Monthly', 'give-square' ),
+		'display'  => esc_html__( 'Monthly', 'give' ),
 	);
 
 	return $schedules;

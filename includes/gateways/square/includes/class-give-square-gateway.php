@@ -110,7 +110,7 @@ class Give_Square_Gateway {
 			isset( $post_data['card_info']['card_name'] ) &&
 			empty( $post_data['card_info']['card_name'] )
 		) {
-			give_set_error( 'no_card_name', __( 'Please enter a name of your credit card account holder.', 'give-square' ) );
+			give_set_error( 'no_card_name', __( 'Please enter a name of your credit card account holder.', 'give' ) );
 		}
 
 	}
@@ -188,7 +188,7 @@ class Give_Square_Gateway {
 				->setNote(
 					sprintf(
 						/* translators: 1. Give Donation Form Title. */
-						__( 'Donation: %1$s', 'give-square' ),
+						__( 'Donation: %1$s', 'give' ),
 						mb_strlen( $donation_data['give_form_title'] ) > 47 ? mb_substr( $donation_data['give_form_title'], 0, 47 ) . '...' : $donation_data['give_form_title']
 					)
 				);
@@ -225,65 +225,65 @@ class Give_Square_Gateway {
 				switch ( $response->errors[0]->code ) {
 
 					case 'VERIFY_CVV_FAILURE':
-						$error_message = __( 'Unable to verify CVV.', 'give-square' );
+						$error_message = __( 'Unable to verify CVV.', 'give' );
 						break;
 
 					case 'CARD_EXPIRED':
-						$error_message = __( 'Credit Card is expired. ', 'give-square' );
+						$error_message = __( 'Credit Card is expired. ', 'give' );
 						break;
 
 					case 'CARD_TOKEN_USED':
-						$error_message = __( 'Unable to process your payment.', 'give-square' );
+						$error_message = __( 'Unable to process your payment.', 'give' );
 						break;
 
 					case 'INVALID_EXPIRATION':
-						$error_message = __( 'Invalid expiration date.', 'give-square' );
+						$error_message = __( 'Invalid expiration date.', 'give' );
 						break;
 
 					case 'CARD_DECLINED':
-						$error_message = __( 'Credit card was declined.', 'give-square' );
+						$error_message = __( 'Credit card was declined.', 'give' );
 						break;
 
 					case 'CARD_DECLINED_CALL_ISSUER':
-						$error_message = __( 'Credit card was declined. Please call your card issuer.', 'give-square' );
+						$error_message = __( 'Credit card was declined. Please call your card issuer.', 'give' );
 						break;
 
 					case 'UNSUPPORTED_CARD_BRAND':
-						$error_message = __( 'Credit card type is not supported. Please try again with another type.', 'give-square' );
+						$error_message = __( 'Credit card type is not supported. Please try again with another type.', 'give' );
 						break;
 
 					case 'MISSING_REQUIRED_PARAMETER':
 						if ( 'card_nonce' === $response->errors[0]->field ) {
-							$error_message = __( 'Card Nonce not found. Please try again or contact administrator.', 'give-square' );
+							$error_message = __( 'Card Nonce not found. Please try again or contact administrator.', 'give' );
 							break;
 						} else {
-							$error_message = __( 'Credit card type is not supported. Please try again with another type.', 'give-square' );
+							$error_message = __( 'Credit card type is not supported. Please try again with another type.', 'give' );
 							break;
 						}
 
 					case 'CARD_PROCESSING_NOT_ENABLED':
-						$error_message = __( 'Card Processing not enabled on your Square Account. Please check and try again.', 'give-square' );
+						$error_message = __( 'Card Processing not enabled on your Square Account. Please check and try again.', 'give' );
 						break;
 
 					case 'NOT_FOUND':
 						$error_message = sprintf(
 							/* translators: 1. Location ID. */
-							__( 'This merchant does not have a location with the ID %1$s', 'give-square' ),
+							__( 'This merchant does not have a location with the ID %1$s', 'give' ),
 							$location_id
 						);
 						break;
 
 					default:
-						$error_message = __( 'An error occurred while processing the donation. Please try again.', 'give-square' );
+						$error_message = __( 'An error occurred while processing the donation. Please try again.', 'give' );
 						break;
 				} // End switch().
 
 				// Something went wrong outside of Square.
 				give_record_gateway_error(
-					__( 'Square Error', 'give-square' ),
+					__( 'Square Error', 'give' ),
 					sprintf(
 						/* translators: %s Exception error message. */
-						__( 'The Square Gateway returned an error while processing a donation. Details: %s', 'give-square' ),
+						__( 'The Square Gateway returned an error while processing a donation. Details: %s', 'give' ),
 						$e->getMessage()
 					)
 				);
@@ -292,7 +292,7 @@ class Give_Square_Gateway {
 				give_update_payment_status( $donation_id, 'failed' );
 
 				// Provide note why failed.
-				give_insert_payment_note( $donation_id, sprintf( __( 'Donation failed. Reason: %s', 'give-square' ), $error_message ) );
+				give_insert_payment_note( $donation_id, sprintf( __( 'Donation failed. Reason: %s', 'give' ), $error_message ) );
 
 				// Set Error to notify user.
 				give_set_error( 'give_square_gateway_error', $error_message );

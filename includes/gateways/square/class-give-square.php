@@ -111,8 +111,8 @@ if ( ! class_exists( 'Give_Square' ) ) {
 
 			// Square - On page credit card.
 			$gateways['square'] = array(
-				'admin_label'    => __( 'Square Gateway', 'give-square' ),
-				'checkout_label' => __( 'Credit Card', 'give-square' ),
+				'admin_label'    => __( 'Square Gateway', 'give' ),
+				'checkout_label' => __( 'Credit Card', 'give' ),
 			);
 
 			return $gateways;

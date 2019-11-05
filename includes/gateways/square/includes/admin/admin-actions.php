@@ -34,11 +34,11 @@ function give_square_register_settings( $settings ) {
 					'type' => 'title',
 					'desc' => sprintf(
 						'<p style="background: #FFF; padding: 15px;border-radius: 5px;"><strong>%1$s</strong> %2$s <a href="%3$s" target="_blank">%4$s</a> %5$s</p>',
-						__( 'Note:', 'give-square' ),
-						__( 'Test donations do not appear in the Square Dashboard.', 'give-square' ),
+						__( 'Note:', 'give' ),
+						__( 'Test donations do not appear in the Square Dashboard.', 'give' ),
 						esc_url( 'https://docs.connect.squareup.com/testing/sandbox#sandbox-limitations' ),
-						__( 'Click here', 'give-square' ),
-						__( 'for more information on Square\'s sandbox limitations.', 'give-square' )
+						__( 'Click here', 'give' ),
+						__( 'for more information on Square\'s sandbox limitations.', 'give' )
 					)
 				),
 			);
@@ -48,7 +48,7 @@ function give_square_register_settings( $settings ) {
 				$business_locations = give_square_get_business_locations();
 
 				$settings[] = array(
-					'name'          => __( 'Square Connect', 'give-square' ),
+					'name'          => __( 'Square Connect', 'give' ),
 					'desc'          => '',
 					'wrapper_class' => 'give-square-connect-field',
 					'id'            => 'square-connect-field',
@@ -56,8 +56,8 @@ function give_square_register_settings( $settings ) {
 				);
 
 				$settings[] = array(
-					'name'          => __( 'Location', 'give-square' ),
-					'desc'          => __( 'Select the location you wish to link to this site. You must have <a href="https://squareup.com/dashboard/locations" target="_blank">locations</a> set in Square and approved.', 'give-square' ),
+					'name'          => __( 'Location', 'give' ),
+					'desc'          => __( 'Select the location you wish to link to this site. You must have <a href="https://squareup.com/dashboard/locations" target="_blank">locations</a> set in Square and approved.', 'give' ),
 					'id'            => 'give_square_business_location',
 					'type'          => 'location_select',
 					'wrapper_class' => give_square_is_connected() ? 'give-square-business-location-wrap' : 'give-square-business-location-wrap give-hidden',
@@ -67,48 +67,48 @@ function give_square_register_settings( $settings ) {
 			} else {
 
 				$settings[] = array(
-					'name'          => __( 'Live Application ID', 'give-square' ),
-					'desc'          => __( 'Enter your live application id, found in your Square Account Settings.', 'give-square' ),
+					'name'          => __( 'Live Application ID', 'give' ),
+					'desc'          => __( 'Enter your live application id, found in your Square Account Settings.', 'give' ),
 					'id'            => 'give_square_live_application_id',
 					'type'          => 'text',
 					'wrapper_class' => 'give-square-live-application-id',
 				);
 
 				$settings[] = array(
-					'name'          => __( 'Live Access Token', 'give-square' ),
-					'desc'          => __( 'Enter your live access token, found in your Square Account Settings.', 'give-square' ),
+					'name'          => __( 'Live Access Token', 'give' ),
+					'desc'          => __( 'Enter your live access token, found in your Square Account Settings.', 'give' ),
 					'id'            => 'give_square_live_access_token',
 					'type'          => 'api_key',
 					'wrapper_class' => 'give-square-live-access-token',
 				);
 
 				$settings[] = array(
-					'name'          => __( 'Live Location ID', 'give-square' ),
-					'desc'          => __( 'Enter your live location id, found in your Square Account Settings.', 'give-square' ),
+					'name'          => __( 'Live Location ID', 'give' ),
+					'desc'          => __( 'Enter your live location id, found in your Square Account Settings.', 'give' ),
 					'id'            => 'give_square_live_location_id',
 					'type'          => 'text',
 					'wrapper_class' => 'give-square-live-location-id',
 				);
 
 				$settings[] = array(
-					'name'          => __( 'SandBox Application ID', 'give-square' ),
-					'desc'          => __( 'Enter your sandbox application id, found in your Square Account Settings.', 'give-square' ),
+					'name'          => __( 'SandBox Application ID', 'give' ),
+					'desc'          => __( 'Enter your sandbox application id, found in your Square Account Settings.', 'give' ),
 					'id'            => 'give_square_sandbox_application_id',
 					'type'          => 'text',
 					'wrapper_class' => 'give-square-sandbox-application-id',
 				);
 
 				$settings[] = array(
-					'name'          => __( 'SandBox Access Token', 'give-square' ),
-					'desc'          => __( 'Enter your sandbox access token, found in your Square Account Settings.', 'give-square' ),
+					'name'          => __( 'SandBox Access Token', 'give' ),
+					'desc'          => __( 'Enter your sandbox access token, found in your Square Account Settings.', 'give' ),
 					'id'            => 'give_square_sandbox_access_token',
 					'type'          => 'api_key',
 					'wrapper_class' => 'give-square-sandbox-access-token',
 				);
 
 				$settings[] = array(
-					'name'          => __( 'SandBox Location ID', 'give-square' ),
-					'desc'          => __( 'Enter your sandbox access token, found in your Square Account Settings.', 'give-square' ),
+					'name'          => __( 'SandBox Location ID', 'give' ),
+					'desc'          => __( 'Enter your sandbox access token, found in your Square Account Settings.', 'give' ),
 					'id'            => 'give_square_sandbox_location_id',
 					'type'          => 'text',
 					'wrapper_class' => 'give-square-sandbox-location-id',
@@ -117,16 +117,16 @@ function give_square_register_settings( $settings ) {
 			} // End if().
 
 			$settings[] = array(
-				'name' => __( 'Collect Billing Details', 'give-square' ),
-				'desc' => __( 'This option will enable the billing details section for Square which requires the donor\'s address to complete the donation. These fields are not required by Square to process the transaction, but you may have the need to collect the data.', 'give-square' ),
+				'name' => __( 'Collect Billing Details', 'give' ),
+				'desc' => __( 'This option will enable the billing details section for Square which requires the donor\'s address to complete the donation. These fields are not required by Square to process the transaction, but you may have the need to collect the data.', 'give' ),
 				'id'   => 'give_square_collect_billing_details',
 				'type' => 'checkbox',
 			);
 			$settings[] = array(
-				'name'  => __( 'Give Square Settings Docs Link', 'give-square' ),
+				'name'  => __( 'Give Square Settings Docs Link', 'give' ),
 				'id'    => 'give_square_settings_docs_link',
 				'url'   => esc_url( 'http://docs.givewp.com/addon-square' ),
-				'title' => __( 'Square Payment Gateway', 'give-square' ),
+				'title' => __( 'Square Payment Gateway', 'give' ),
 				'type'  => 'give_docs_link',
 			);
 			$settings[] = array(
@@ -163,7 +163,7 @@ function give_square_connect_field( $attr ) {
 	<tr valign="top" <?php echo ! empty( $attr['wrapper_class'] ) ? 'class="' . esc_attr( $attr['wrapper_class'] ) . '"' : ''; ?>>
 
 		<th scope="row" class="titledesc">
-			<label for="<?php echo esc_attr( $attr['id'] ); ?>"> <?php esc_attr_e( 'Square Connection', 'give-square' ); ?></label>
+			<label for="<?php echo esc_attr( $attr['id'] ); ?>"> <?php esc_attr_e( 'Square Connection', 'give' ); ?></label>
 		</th>
 
 		<td class="give-forminp give-forminp-api_key <?php echo $connection_status_css; ?> ">
@@ -172,13 +172,13 @@ function give_square_connect_field( $attr ) {
 				echo give_square_connect_button();
 				?>
 				<p class="give-field-description">
-					<?php esc_html_e( 'Connect with Square to start receiving donations through card payments.', 'give-square' ); ?>
+					<?php esc_html_e( 'Connect with Square to start receiving donations through card payments.', 'give' ); ?>
 				</p>
 				<?php
 			} else {
 				?>
 				<a href="<?php echo esc_url( $disconnect_url ); ?>" id="give-square-disconnect" class="button-primary">
-					<?php esc_html_e( 'Disconnect from Square', 'give-square' ); ?>
+					<?php esc_html_e( 'Disconnect from Square', 'give' ); ?>
 				</a>
 				<?php
 			}
@@ -235,7 +235,7 @@ function give_square_location_select_field( $attr ) {
 				?>
 			</select>
 			<a href="<?php echo esc_url_raw( $refresh_url ); ?>" class="button">
-				<?php esc_html_e( 'Refresh', 'give-square' ); ?>
+				<?php esc_html_e( 'Refresh', 'give' ); ?>
 			</a>
 			<div class="give-field-description">
 				<?php echo wp_kses_post( $attr['desc'] ); ?>
@@ -422,7 +422,7 @@ function give_square_process_refund( $donation_id, $new_status, $old_status ) {
 		'idempotency_key' => give_get_meta( $donation_id, '_give_square_donation_idempotency_key', true ),
 		'tender_id'       => give_get_meta( $donation_id, '_give_square_donation_tender_id', true ),
 		'amount_money'    => give_square_prepare_donation_amount( give_format_amount( give_donation_amount( $donation_id ) ) ),
-		'reason'          => sprintf( __( 'Refund from GiveWP Admin on %s', 'give-square' ), get_bloginfo( 'url' ) ),
+		'reason'          => sprintf( __( 'Refund from GiveWP Admin on %s', 'give' ), get_bloginfo( 'url' ) ),
 	);
 
 	$refund_request = new \SquareConnect\Model\CreateRefundRequest( $data ); // \SquareConnect\Model\CreateRefundRequest | An object containing the fields to POST for the request.  See the corresponding object definition for field details.
@@ -449,9 +449,9 @@ function give_square_process_refund( $donation_id, $new_status, $old_status ) {
 			sprintf(
 				/* translators: 1. Error Message, 2. Exception Message, 3. Code Text, 4. Code Message. */
 				'%1$s %2$s %3$s %4$s',
-				__( 'The Square payment gateway returned an error while refunding a donation. Message:', 'give-square' ),
+				__( 'The Square payment gateway returned an error while refunding a donation. Message:', 'give' ),
 				$e->getMessage(),
-				__( 'Code:', 'give-square' ),
+				__( 'Code:', 'give' ),
 				$e->getCode()
 			)
 		);
@@ -483,7 +483,7 @@ function give_square_opt_square_refund( $donation_id ) {
 		<p>
 			<input type="checkbox" id="give-square-opt-refund" name="give_square_opt_refund" value="1"/>
 			<label for="give-square-opt-refund">
-				<?php esc_html_e( 'Refund Charge in Square?', 'give-square' ); ?>
+				<?php esc_html_e( 'Refund Charge in Square?', 'give' ); ?>
 			</label>
 		</p>
 	</div>
@@ -550,7 +550,7 @@ function give_square_admin_notices() {
 		Give()->notices->register_notice(
 			array(
 				'id'          => 'give-square-credit-card-processing-not-enabled-error',
-				'description' => __( 'The connected Square account does not contain any locations that have credit card processing enabled, so the locations list is empty.', 'give-square' ),
+				'description' => __( 'The connected Square account does not contain any locations that have credit card processing enabled, so the locations list is empty.', 'give' ),
 				'type'        => 'error',
 				'dismissible' => false,
 			)

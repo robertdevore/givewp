@@ -108,11 +108,11 @@ class Give_Square_Customer {
 
 			} catch ( Exception $e ) {
 				give_record_gateway_error(
-					__( 'Square Customer Creation Error', 'give-square' ),
+					__( 'Square Customer Creation Error', 'give' ),
 					sprintf(
 						/* translators: 1. Intro Text, 2. Exception error message. */
 						'%1$s %2$s',
-						__( 'Unable to create customer at Square. Details:', 'give-square' ),
+						__( 'Unable to create customer at Square. Details:', 'give' ),
 						$e->getMessage()
 					)
 				);
@@ -143,11 +143,11 @@ class Give_Square_Customer {
 
 		} catch ( Exception $e ) {
 			give_record_gateway_error(
-				__( 'Square Customer Retrieval Error', 'give-square' ),
+				__( 'Square Customer Retrieval Error', 'give' ),
 				sprintf(
 					/* translators: 1. Intro Text, 2. Exception error message. */
 					'%1$s %2$s',
-					__( 'Unable to retrive customer details from Square. Details:', 'give-square' ),
+					__( 'Unable to retrive customer details from Square. Details:', 'give' ),
 					$e->getMessage()
 				)
 			);

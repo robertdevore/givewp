@@ -53,8 +53,8 @@ function give_square_connect_maybe_show_banner() {
 	$message = sprintf(
 		/* translators: 1. Connect Bold Text, 2. Connect Intro Text, 3. Dismiss Text, 4. Connect button html */
 		'<strong>%1$s</strong> %2$s %3$s',
-		__( 'Square Connect:', 'give-square' ),
-		__( 'You\'re almost ready to start accepting online donations.', 'give-square' ),
+		__( 'Square Connect:', 'give' ),
+		__( 'You\'re almost ready to start accepting online donations.', 'give' ),
 		$connect_button
 	);
 
@@ -89,9 +89,9 @@ function give_square_business_location_notice() {
 		echo sprintf(
 			/* translators: 1. Connect Bold Text */
 			'<div class="notice notice-error"><p>%1$s <a href="%2$s">%3$s</a></p></div>',
-			esc_html__( 'Give - Square is almost ready. Please', 'give-square' ),
+			esc_html__( 'Give - Square is almost ready. Please', 'give' ),
 			esc_url_raw( admin_url() . 'edit.php?post_type=give_forms&page=give-settings&tab=gateways&section=square-settings' ),
-			esc_html__( 'set your business location.', 'give-square' )
+			esc_html__( 'set your business location.', 'give' )
 		);
 	}
 }
