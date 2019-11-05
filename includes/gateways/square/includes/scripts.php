@@ -26,7 +26,10 @@ function give_square_add_scripts() {
 		return;
 	}
 
-	wp_register_script( 'give-square-payment-form', 'https://js.squareup.com/v2/paymentform', array(), GIVE_VERSION );
+	$host = give_square_get_host();
+
+	// Load payment form based on the host provided by test mode settings.
+	wp_register_script( 'give-square-payment-form', "https://js.{$host}/v2/paymentform", array(), GIVE_VERSION );
 	wp_enqueue_script( 'give-square-payment-form' );
 
 	wp_register_script( 'give-square', GIVE_PLUGIN_URL . 'assets/dist/js/give-square.js', array( 'jquery', 'give-square-payment-form' ), GIVE_VERSION );
