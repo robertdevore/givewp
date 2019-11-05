@@ -141,6 +141,7 @@ class Give_Square_Gateway {
 			$form_id         = intval( $posted_data['post_data']['give-form-id'] );
 			$price_id        = ! empty( $posted_data['post_data']['give-price-id'] ) ? $posted_data['post_data']['give-price-id'] : 0;
 			$donation_amount = ! empty( $posted_data['price'] ) ? $posted_data['price'] : 0;
+			$source_id       = ! empty( $posted_data['post_data']['card_nonce'] ) ? $posted_data['post_data']['card_nonce'] : false;
 
 			// Setup the payment details.
 			$donation_data = array(
@@ -178,37 +179,38 @@ class Give_Square_Gateway {
 			give_update_meta( $donation_id, '_give_square_donation_idempotency_key', $idempotency_key );
 			give_insert_payment_note( $donation_id, "Idempotency Key: {$idempotency_key}" );
 
-			// Prepare charge request using the donation form values.
-			$this->charge_request
-				->setCardNonce( $posted_data['post_data']['card_nonce'] )
-				->setIdempotencyKey( $idempotency_key )
-				->setAmountMoney( $amount )
-				->setCustomerId( $customer_id )
-				->setBuyerEmailAddress( $donation_data['user_email'] )
-				->setNote(
-					sprintf(
-						/* translators: 1. Give Donation Form Title. */
-						__( 'Donation: %1$s', 'give' ),
-						mb_strlen( $donation_data['give_form_title'] ) > 47 ? mb_substr( $donation_data['give_form_title'], 0, 47 ) . '...' : $donation_data['give_form_title']
-					)
-				);
+			// Set default configuration.
+			$api_client = give_square_set_default_configuration();
+
+			// Create instance of Square Payments API.
+			$payments_api = new \SquareConnect\Api\PaymentsApi( $api_client );
+
+			// Create instance of Square Payment Request.
+			$payment_request = new \SquareConnect\Model\CreatePaymentRequest();
+
+			// Set required parameters to payment request.
+			$payment_request->setSourceId( $source_id );
+			$payment_request->setAmountMoney( $amount );
+			$payment_request->setLocationId( $location_id );
+			$payment_request->setIdempotencyKey( $idempotency_key );
+			$payment_request->setCustomerId( $customer_id );
+			$payment_request->setBuyerEmailAddress( $donation_data['user_email'] );
+			$payment_request->setNote( sprintf(
+				/* translators: 1. Give Donation Form Title. */
+				__( 'Donation: %1$s', 'give' ),
+				mb_strlen( $donation_data['give_form_title'] ) > 47 ? mb_substr( $donation_data['give_form_title'], 0, 47 ) . '...' : $donation_data['give_form_title']
+			) );
+
 
 			try {
 
 				// Process the donation through the Square API.
-				$donation = $this->transaction_api->charge( $location_id, $this->charge_request );
+				$donation = $payments_api->createPayment( $payment_request );
 
 				// Save Transaction ID to Donation.
-				$transaction_id = $donation->getTransaction()->getId();
+				$transaction_id = $donation->getPayment()->getId();
 				give_set_payment_transaction_id( $donation_id, $transaction_id );
 				give_insert_payment_note( $donation_id, "Transaction ID: {$transaction_id}" );
-
-				// Set Tender ID for refunds
-				$tenders = $donation->getTransaction()->getTenders();
-				if ( isset( $tenders[0] ) ) {
-					give_update_meta( $donation_id, '_give_square_donation_tender_id', $tenders[0]->getId() );
-					give_insert_payment_note( $donation_id, "Tender ID: {$tenders[0]->getId()}" );
-				}
 
 				if ( ! empty( $transaction_id ) ) {
 
