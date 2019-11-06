@@ -195,6 +195,15 @@ class Give_Square_Gateway {
 			$payment_request->setIdempotencyKey( $idempotency_key );
 			$payment_request->setCustomerId( $customer_id );
 			$payment_request->setBuyerEmailAddress( $donation_data['user_email'] );
+
+			// Apply Application fee when Give - Square Premium add-on is not active.
+			if ( ! defined( 'GIVE_SQUARE_VERSION' ) ) {
+
+				$currency        = give_get_currency( $form_id );
+				$application_fee = give_square_get_application_fee( $donation_amount, $currency );
+				$payment_request->setAppFeeMoney( $application_fee );
+			}
+
 			$payment_request->setNote( sprintf(
 				/* translators: 1. Give Donation Form Title. */
 				__( 'Donation: %1$s', 'give' ),
