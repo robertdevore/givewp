@@ -852,3 +852,29 @@ function give_square_get_host_url() {
 
 	return "https://connect.{$host}";
 }
+
+/**
+ * This function is used to calculate the application fee for the donation.
+ *
+ * @param int    $donation_amount Donation Amount.
+ * @param string $currency        Donation Currency.
+ *
+ * @since 2.6.0
+ *
+ * @return \SquareConnect\Model\Money
+ */
+function give_square_get_application_fee( $donation_amount, $currency ) {
+
+	$money                    = new SquareConnect\Model\Money();
+	$is_zero_decimal_currency = give_is_zero_based_currency( $currency );
+
+	// If not zero decimal currency then multiple the amount with 100 to convert it to sub-units.
+	if ( ! $is_zero_decimal_currency ) {
+		$amount = $donation_amount * 100;
+	}
+
+	// Calculate 2% application fee.
+	$fee_amount = $amount * 2 / 100;
+
+	return $money->setAmount( $fee_amount )->setCurrency( $currency );
+}
