@@ -494,45 +494,6 @@ function give_square_opt_square_refund( $donation_id ) {
 add_action( 'give_view_donation_details_totals_after', 'give_square_opt_square_refund', 10, 1 );
 
 /**
- * Given a transaction ID, generate a link to the Square transaction ID details
- *
- * @since  2.6.0
- *
- * @param string $transaction_id The Transaction ID.
- * @param int    $payment_id The payment ID for this transaction.
- *
- * @return string                 A link to the Transaction details
- */
-function give_square_link_transaction_id( $transaction_id, $payment_id ) {
-
-	if ( $transaction_id == $payment_id ) {
-		return $transaction_id;
-	}
-
-	$mode = give_get_meta( $payment_id, '_give_payment_mode', true );
-
-	if ( 'test' === $mode ) {
-		return $transaction_id;
-	}
-
-	// If empty transaction id then get transaction id from donation id.
-	if ( empty( $transaction_id ) ) {
-		$transaction_id = give_get_payment_transaction_id( $payment_id );
-	}
-
-	$transaction_link = sprintf(
-		'<a href="%1$s" target="_blank">%2$s</a>',
-		"https://squareup.com/dashboard/sales/transactions/{$transaction_id}/",
-		$transaction_id
-	);
-
-	return apply_filters( 'give_square_link_donation_details_transaction_id', $transaction_link );
-
-}
-
-add_filter( 'give_payment_details_transaction_id-square', 'give_square_link_transaction_id', 10, 2 );
-
-/**
  * Show notice if test mode enabled
  *
  * @since 2.6.0
