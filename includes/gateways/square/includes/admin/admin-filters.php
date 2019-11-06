@@ -141,3 +141,29 @@ function give_square_add_monthly_cron_interval( $schedules ) {
 
 add_filter( 'cron_schedules', 'give_square_add_monthly_cron_interval' );
 
+/**
+ * This function is used to link transaction ID to Square Dashboard.
+ *
+ * @param string $transaction_id Transaction ID of Square.
+ * @param string $donation_id    Donation ID of Give.
+ *
+ * @since 2.6.0
+ *
+ * @return mixed|void
+ */
+function give_square_link_transaction_id( $transaction_id, $donation_id ) {
+
+	$host        = give_square_get_host();
+	$location_id = give_square_get_location_id();
+
+	$transaction_url = sprintf(
+		'<a href="%1$s" target="_blank">%2$s</a>',
+		"https://{$host}/dashboard/sales/transactions/$transaction_id/by-unit/{$location_id}",
+		$transaction_id
+	);
+
+	return apply_filters( 'give_square_link_transaction_id', $transaction_url );
+
+}
+
+add_filter( 'give_payment_details_transaction_id-square', 'give_square_link_transaction_id', 10, 2 );
