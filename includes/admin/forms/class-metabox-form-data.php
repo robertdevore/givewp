@@ -17,6 +17,13 @@
 class Give_MetaBox_Form_Data {
 
 	/**
+	 * @since 2.5.11
+	 * 
+	 * @var Give_MetaBox_Form_Data
+	 */
+	private static $instance;
+
+	/**
 	 * Meta box settings.
 	 *
 	 * @since 1.8
@@ -40,11 +47,37 @@ class Give_MetaBox_Form_Data {
 	 */
 	private $metabox_label;
 
+	/**
+	 * Singleton pattern.
+	 *
+	 * @since  1.0
+	 * @access private
+	 * Give_Form_Countdown_Metabox_Settings constructor.
+	 */
+	private function __construct() {
+	}
+
+
+	/**
+	 * Get single instance.
+	 *
+	 * @since  1.0
+	 * @access public
+	 * @return Give_MetaBox_Form_Data
+	 */
+	public static function get_instance() {
+		if ( null === static::$instance ) {
+			static::$instance = new static();
+		}
+
+		return static::$instance;
+	}
+
 
 	/**
 	 * Give_MetaBox_Form_Data constructor.
 	 */
-	function __construct() {
+	public function init() {
 		$this->metabox_id    = 'give-metabox-form-data';
 		$this->metabox_label = __( 'Donation Form Options', 'give' );
 
@@ -1329,5 +1362,5 @@ class Give_MetaBox_Form_Data {
 	}
 }
 
-new Give_MetaBox_Form_Data();
+Give_MetaBox_Form_Data::get_instance()->init();
 
