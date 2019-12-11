@@ -18,7 +18,7 @@ class Give_MetaBox_Form_Data {
 
 	/**
 	 * @since 2.5.11
-	 * 
+	 *
 	 * @var Give_MetaBox_Form_Data
 	 */
 	private static $instance;
@@ -88,7 +88,7 @@ class Give_MetaBox_Form_Data {
 		add_action( 'add_meta_boxes', array( $this, 'add_meta_box' ), 10 );
 
 		// Save form meta.
-		add_action( 'save_post_give_forms', array( $this, 'save' ), 10, 2 );
+		add_action( 'save_post_give_forms', array( $this, 'handle_form_save' ), 10, 2 );
 
 		// cmb2 old setting loaders.
 		// add_filter( 'give_metabox_form_data_settings', array( $this, 'cmb2_metabox_settings' ) );
@@ -907,16 +907,16 @@ class Give_MetaBox_Form_Data {
 	 * Check if we're saving, the trigger an action based on the post type.
 	 *
 	 * @param int        $post_id Post ID.
-	 * @param int|object $post    Post Object.
+	 * @param WP_Post $post    Post Object.
 	 *
 	 * @since 1.8
 	 *
 	 * @return void
 	 */
-	public function save( $post_id, $post ) {
+	public function handle_form_save( $post_id, $post ) {
 
 		// $post_id and $post are required.
-		if ( empty( $post_id ) || empty( $post ) ) {
+		if ( empty( $post_id ) || ! ( $post_id instanceof WP_Post ) ) {
 			return;
 		}
 
@@ -940,8 +940,21 @@ class Give_MetaBox_Form_Data {
 			return;
 		}
 
+		$this->save( $post, $_POST );
+	}
+
+
+	/**
+	 * Save form setting
+	 *
+	 * @since 2.5.11
+	 *
+	 * @param WP_Post $form
+	 * @param array $new_form_settings
+	 */
+	private function save( $form, $new_form_settings ){
 		// Fire action before saving form meta.
-		do_action( 'give_pre_process_give_forms_meta', $post_id, $post );
+		do_action( 'give_pre_process_give_forms_meta', $form->ID, $form );
 
 		/**
 		 * Filter the meta key to save.
@@ -955,29 +968,29 @@ class Give_MetaBox_Form_Data {
 
 				// Set default value for checkbox fields.
 				if (
-					! isset( $_POST[ $form_meta_key ] ) &&
+					! isset( $new_form_settings[ $form_meta_key ] ) &&
 					in_array( $this->get_field_type( $form_meta_key ), array( 'checkbox', 'chosen' ) )
 				) {
-					$_POST[ $form_meta_key ] = '';
+					$new_form_settings[ $form_meta_key ] = '';
 				}
 
-				if ( isset( $_POST[ $form_meta_key ] ) ) {
+				if ( isset( $new_form_settings[ $form_meta_key ] ) ) {
 					$setting_field = $this->get_setting_field( $form_meta_key );
 					if ( ! empty( $setting_field['type'] ) ) {
 						switch ( $setting_field['type'] ) {
 							case 'textarea':
 							case 'wysiwyg':
-								$form_meta_value = wp_kses_post( $_POST[ $form_meta_key ] );
+								$form_meta_value = wp_kses_post( $new_form_settings[ $form_meta_key ] );
 								break;
 
 							case 'donation_limit' :
-								$form_meta_value = $_POST[ $form_meta_key ];
+								$form_meta_value = $new_form_settings[ $form_meta_key ];
 								break;
 
 							case 'group':
 								$form_meta_value = array();
 
-								foreach ( $_POST[ $form_meta_key ] as $index => $group ) {
+								foreach ( $new_form_settings[ $form_meta_key ] as $index => $group ) {
 
 									// Do not save template input field values.
 									if ( '{{row-count-placeholder}}' === $index ) {
@@ -1006,7 +1019,7 @@ class Give_MetaBox_Form_Data {
 								break;
 
 							default:
-								$form_meta_value = give_clean( $_POST[ $form_meta_key ] );
+								$form_meta_value = give_clean( $new_form_settings[ $form_meta_key ] );
 						}// End switch().
 
 						/**
@@ -1019,7 +1032,7 @@ class Give_MetaBox_Form_Data {
 							$this->sanitize_form_meta( $form_meta_value, $setting_field ),
 							$form_meta_key,
 							$this,
-							$post_id
+							$form->ID
 						);
 
 						// Range slider.
@@ -1029,28 +1042,28 @@ class Give_MetaBox_Form_Data {
 							$form_meta_value = array_map( 'give_sanitize_amount_for_db', $form_meta_value );
 
 							// Store it to form meta.
-							give_update_meta( $post_id, $form_meta_key . '_minimum', $form_meta_value['minimum'] );
-							give_update_meta( $post_id, $form_meta_key . '_maximum', $form_meta_value['maximum'] );
+							give_update_meta( $form->ID, $form_meta_key . '_minimum', $form_meta_value['minimum'] );
+							give_update_meta( $form->ID, $form_meta_key . '_maximum', $form_meta_value['maximum'] );
 						} else {
 							// Save data.
-							give_update_meta( $post_id, $form_meta_key, $form_meta_value );
+							give_update_meta( $form->ID, $form_meta_key, $form_meta_value );
 						}
 
 						// Verify and delete form meta based on the form status.
-						give_set_form_closed_status( $post_id );
+						give_set_form_closed_status( $form->ID );
 
 						// Fire after saving form meta key.
-						do_action( "give_save_{$form_meta_key}", $form_meta_key, $form_meta_value, $post_id, $post );
+						do_action( "give_save_{$form_meta_key}", $form_meta_key, $form_meta_value, $form->ID, $form );
 					}// End if().
 				}// End if().
 			}// End foreach().
 		}// End if().
 
 		// Update the goal progress for donation form.
-		give_update_goal_progress( $post_id );
+		give_update_goal_progress( $form->ID );
 
 		// Fire action after saving form meta.
-		do_action( 'give_post_process_give_forms_meta', $post_id, $post );
+		do_action( 'give_post_process_give_forms_meta', $form->ID, $form );
 	}
 
 
