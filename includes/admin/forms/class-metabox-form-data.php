@@ -167,22 +167,6 @@ class Give_MetaBox_Form_Data {
 
 	}
 
-
-	/**
-	 * Enqueue scripts.
-	 *
-	 * @since 1.8
-	 *
-	 * @return void
-	 */
-	function enqueue_script() {
-		global $post;
-
-		if ( is_object( $post ) && 'give_forms' === $post->post_type ) {
-
-		}
-	}
-
 	/**
 	 * Get metabox id.
 	 *
