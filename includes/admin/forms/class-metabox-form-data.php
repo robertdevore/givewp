@@ -427,7 +427,7 @@ class Give_MetaBox_Form_Data {
 	 * @param WP_Post $form
 	 * @param array $new_form_settings
 	 */
-	private function save( $form, $new_form_settings ){
+	public function save( $form, $new_form_settings ){
 		// Fire action before saving form meta.
 		do_action( 'give_pre_process_give_forms_meta', $form->ID, $form );
 
