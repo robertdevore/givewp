@@ -14,7 +14,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-Give_Cron::add_monthly_event( 'give_refresh_licenses' );
+
+/**
+ * Look for Give core add-ons update after every third day
+ *
+ * @since 2.5.11
+ */
+Give_Cron::add_thricely_event( 'give_refresh_licenses' );
 
 /**
  * Hooks Give actions, when present in the $_GET superglobal. Every give_action
@@ -279,7 +285,7 @@ function __give_verify_addon_dependency_before_update( $error, $hook_extra ) {
 		return new WP_Error(
 			'Give_Addon_Update_Error',
 			sprintf(
-				__( 'Give version %s is required to update this add-on.', 'give' ),
+				__( 'GiveWP version %s is required to update this add-on.', 'give' ),
 				$give_min_version
 			)
 		);

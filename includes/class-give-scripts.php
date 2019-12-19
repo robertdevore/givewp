@@ -88,7 +88,10 @@ class Give_Scripts {
 	 */
 	public function register_styles() {
 
-		// WP-admin.
+		// Global WP-admin.
+		wp_register_style( 'give-admin-global-styles', GIVE_PLUGIN_URL . 'assets/dist/css/admin-global' . $this->direction . '.css', array(), GIVE_VERSION );
+
+		// GiveWP-only WP-admin.
 		wp_register_style( 'give-admin-styles', GIVE_PLUGIN_URL . 'assets/dist/css/admin' . $this->direction . '.css', array(), GIVE_VERSION );
 
 		// WP-admin: plugin page.
@@ -148,6 +151,10 @@ class Give_Scripts {
 	 * @param string $hook Page hook.
 	 */
 	public function admin_enqueue_styles( $hook ) {
+
+		// Global admin styles
+		wp_enqueue_style( 'give-admin-global-styles' );
+
 		// Give Admin Only.
 		if ( ! apply_filters( 'give_load_admin_styles', give_is_admin_page(), $hook ) ) {
 			return;
@@ -249,7 +256,7 @@ class Give_Scripts {
 		$stripe_user_id            = give_get_option( 'give_stripe_user_id', false );
 		$disconnect_stripe_message = sprintf(
 			/* translators: %s Stripe User ID */
-			__( 'Are you sure you want to disconnect Give from Stripe? If disconnected, this website and any others sharing the same Stripe account (%s) that are connected to Give will need to reconnect in order to process payments.', 'give' ),
+			__( 'Are you sure you want to disconnect GiveWP from Stripe? If disconnected, this website and any others sharing the same Stripe account (%s) that are connected to GiveWP will need to reconnect in order to process payments.', 'give' ),
 			$stripe_user_id
 		);
 

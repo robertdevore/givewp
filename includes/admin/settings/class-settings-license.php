@@ -160,7 +160,7 @@ if ( ! class_exists( 'Give_Settings_License' ) ) :
 											<p>
 												<?php
 												echo sprintf(
-													__( 'Sorry, you can not upload plugin from here because we do not have direct access to file system. Please <a href="%1$s" target="_blank">click here</a> to upload Give Add-on.', 'give' ),
+													__( 'Sorry, you can not upload plugin from here because we do not have direct access to file system. Please <a href="%1$s" target="_blank">click here</a> to upload GiveWP Add-on.', 'give' ),
 													admin_url( 'plugin-install.php?tab=upload' )
 												);
 												?>
@@ -220,8 +220,7 @@ if ( ! class_exists( 'Give_Settings_License' ) ) :
 					</div>
 				</div>
 
-				<?php // @TODO: this section should only display if one or more Give add-on are installed regardless of license status. ?>
-				<div class="give-grid-row">
+				<div class="give-grid-row<?php echo get_option( 'give_licenses', array() ) ? '' : ' give-hidden' ?>">
 					<div class="give-grid-col-12">
 
 						<div class="give-licenses-list-header give-clearfix">
@@ -245,12 +244,12 @@ if ( ! class_exists( 'Give_Settings_License' ) ) :
 									<?php _e( 'Refresh All Licenses', 'give' ); ?>
 								</button>
 								<span id="give-last-refresh-notice">
-								<?php echo sprintf(
-									__( 'Last refreshed on %1$s at %2$s', 'give' ),
-									date( give_date_format(), $local_date ),
-									date( 'g:i a', $local_date )
-								); ?>
-								</span>
+									<?php echo sprintf(
+										__( 'Last refreshed on %1$s at %2$s', 'give' ),
+										date( give_date_format(), $local_date ),
+										date( 'g:i a', $local_date )
+									); ?>
+									</span>
 							</div>
 
 							<hr>

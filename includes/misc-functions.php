@@ -407,11 +407,11 @@ function _give_deprecated_function( $function, $version, $replacement = null, $b
 	// Allow plugin to filter the output error trigger.
 	if ( WP_DEBUG && apply_filters( 'give_deprecated_function_trigger_error', $show_errors ) ) {
 		if ( ! is_null( $replacement ) ) {
-			trigger_error( sprintf( __( '%1$s is <strong>deprecated</strong> since Give version %2$s! Use %3$s instead.', 'give' ), $function, $version, $replacement ) );
+			trigger_error( sprintf( __( '%1$s is <strong>deprecated</strong> since GiveWP version %2$s! Use %3$s instead.', 'give' ), $function, $version, $replacement ) );
 			trigger_error( print_r( $backtrace, 1 ) ); // Limited to previous 1028 characters, but since we only need to move back 1 in stack that should be fine.
 			// Alternatively we could dump this to a file.
 		} else {
-			trigger_error( sprintf( __( '%1$s is <strong>deprecated</strong> since Give version %2$s with no alternative available.', 'give' ), $function, $version ) );
+			trigger_error( sprintf( __( '%1$s is <strong>deprecated</strong> since GiveWP version %2$s with no alternative available.', 'give' ), $function, $version ) );
 			trigger_error( print_r( $backtrace, 1 ) );// Limited to previous 1028 characters, but since we only need to move back 1 in stack that should be fine.
 			// Alternatively we could dump this to a file.
 		}
@@ -803,10 +803,18 @@ function give_get_plugins( $args = array() ) {
 		$plugins[ $plugin_path ]['Dir']  = $dirname;
 		$plugins[ $plugin_path ]['Path'] = $plugin_path;
 
+		// A third party add-on may contain more then one author like sofort, so it is better to compare array.
+		$author                          = false !== strpos( $plugin_data['Author'], ',' )
+			? array_map( 'trim', explode( ',', $plugin_data['Author'] ) )
+			: array( $plugin_data['Author'] );
+
 		// Is the plugin a Give add-on?
 		if (
 			false !== strpos( $dirname, 'give-' )
-			&& in_array( $plugin_data['Author'], array( 'WordImpress', 'GiveWP' ) )
+			&& (
+				false !== strpos( $plugin_data['PluginURI'], 'givewp.com' )
+				|| array_intersect( $author, array( 'WordImpress', 'GiveWP' ) )
+			)
 		) {
 			// Plugin is a Give-addon.
 			$plugins[ $plugin_path ]['Type'] = 'add-on';
@@ -822,9 +830,30 @@ function give_get_plugins( $args = array() ) {
 		}
 	}
 
+	if( ! empty( $args['only_add_on'] ) ) {
+		$plugins = array_filter( $plugins, function( $plugin ){
+			return 'add-on' === $plugin['Type'];
+		});
+	}
+
 	if( ! empty( $args['only_premium_add_ons'] ) ) {
+		if( ! function_exists( 'give_get_premium_add_ons' ) ) {
+			require_once GIVE_PLUGIN_DIR . '/includes/admin/misc-functions.php';
+		}
+
+		$premium_addons_list = give_get_premium_add_ons();
+
 		foreach ( $plugins as $key => $plugin ){
-			if( 'add-on' !== $plugin['Type'] || false === strpos( $plugin['PluginURI'], 'givewp.com' ) ) {
+			$addon_shortname = str_replace( 'give-', '', $plugin['Dir'] );
+			$tmp = $premium_addons_list;
+			$is_premium = count( array_filter( $tmp, function( $plugin ) use ($addon_shortname){
+				return false !== strpos( $plugin, $addon_shortname );
+			}) );
+
+			if(
+				'add-on' !== $plugin['Type']
+				|| ( false === strpos( $plugin['PluginURI'], 'givewp.com' ) && ! $is_premium )
+			) {
 				unset( $plugins[$key] );
 			}
 		}
@@ -2134,7 +2163,7 @@ function give_get_receipt_link( $donation_id ) {
  */
 function give_get_receipt_url( $donation_id ) {
 
-	$receipt_url = esc_url(
+	$receipt_url = esc_url_raw(
 		add_query_arg(
 			array(
 				'donation_id' => $donation_id,
@@ -2158,7 +2187,7 @@ function give_get_view_receipt_link( $donation_id ) {
 
 	return sprintf(
 		'<a href="%1$s">%2$s</a>',
-		esc_url( give_get_view_receipt_url( $donation_id ) ),
+		give_get_view_receipt_url( $donation_id ),
 		esc_html__( 'View the receipt in your browser &raquo;', 'give' )
 	);
 
@@ -2174,7 +2203,7 @@ function give_get_view_receipt_link( $donation_id ) {
  */
 function give_get_view_receipt_url( $donation_id ) {
 
-	$receipt_url = esc_url(
+	$receipt_url = esc_url_raw(
 		add_query_arg(
 			array(
 				'action'     => 'view_in_browser',
@@ -2304,7 +2333,7 @@ function give_get_addon_readme_url( $plugin_slug, $by_plugin_name = false ) {
 		$plugin_slug = Give_License::get_short_name( $plugin_slug );
 	}
 
-	$website_url = Give_License::get_website_url();
+	$website_url = trailingslashit( Give_License::get_website_url() );
 
 	/**
 	 * Filter the addon readme.txt url
@@ -2313,7 +2342,7 @@ function give_get_addon_readme_url( $plugin_slug, $by_plugin_name = false ) {
 	 */
 	$url = apply_filters(
 		'give_addon_readme_file_url',
-		"{$website_url}/downloads/plugins/{$plugin_slug}/readme.txt",
+		"{$website_url}downloads/plugins/{$plugin_slug}/readme.txt",
 		$plugin_slug,
 		$by_plugin_name
 	);
@@ -2355,34 +2384,36 @@ function give_refresh_licenses( $wp_check_updates = true ) {
 		)
 		: array();
 
-	$tmp = Give_License::request_license_api(
-		array(
-			'edd_action' => 'check_licenses',
-			'licenses'   => $license_keys,
-			'unlicensed' => implode( ',', $unlicensed_give_addon ),
-		)
-	);
+	$tmp = Give_License::request_license_api( array(
+		'edd_action' => 'check_licenses',
+		'licenses'   => $license_keys,
+		'unlicensed' => implode( ',', $unlicensed_give_addon ),
+	), true );
 
 	if ( ! $tmp || is_wp_error( $tmp ) ) {
 		return array();
 	}
 
+	// Prevent fatal error on WP 4.9.10
+	// Because wp_list_pluck accept only array or array of array in that version.
+	// @see https://github.com/impress-org/give/issues/4176
+	$tmp = json_decode( json_encode( $tmp ), true );
 
 	// Remove unlicensed add-on from response.
 	$tmp_unlicensed = array();
-	foreach ( $tmp as $key => $data ){
-		if( empty( $data ) ) {
-			unset( $tmp->{"{$key}"} );
+	foreach ( $tmp as $key => $data ) {
+		if ( empty( $data ) ) {
+			unset( $tmp["{$key}"] );
 			continue;
 		}
 
-		if( ! isset( $data->check_license ) ) {
-			$tmp_unlicensed[$key] = $data;
-			unset( $tmp->{"{$key}"} );
+		if ( empty( $data['check_license'] ) ) {
+			$tmp_unlicensed[ $key ] = $data;
+			unset( $tmp["{$key}"] );
 		}
 	}
 
-	$check_licenses = json_decode( json_encode( wp_list_pluck( $tmp, 'check_license' ) ), true );
+	$check_licenses = wp_list_pluck( $tmp, 'check_license' );
 
 	/* @var stdClass $data */
 	foreach ( $check_licenses as $key => $data ) {
@@ -2399,25 +2430,24 @@ function give_refresh_licenses( $wp_check_updates = true ) {
 	}
 
 	$tmp_update_plugins = array_merge(
-		array_filter( json_decode( json_encode( wp_list_pluck( $tmp, 'get_version' ) ), true ) ),
-		array_filter( json_decode( json_encode( wp_list_pluck( $tmp, 'get_versions' ) ), true ) )
+		array_filter( wp_list_pluck( $tmp, 'get_version' ) ),
+		array_filter( wp_list_pluck( $tmp, 'get_versions' ) )
 	);
 
-	if( $tmp_unlicensed ) {
-		$tmp_unlicensed = json_decode( json_encode( $tmp_unlicensed ), true );
+	if ( $tmp_unlicensed ) {
 		$tmp_update_plugins = array_merge( $tmp_update_plugins, $tmp_unlicensed );
 	}
 
 	update_option( 'give_licenses', $give_licenses, 'no' );
 	update_option( 'give_get_versions', $tmp_update_plugins, 'no' );
 
-	$refresh            = Give_License::refresh_license_status();
-	$refresh['time']    = current_time( 'timestamp', 1 );
+	$refresh         = Give_License::refresh_license_status();
+	$refresh['time'] = current_time( 'timestamp', 1 );
 
 	update_option( 'give_licenses_refreshed_last_checked', $refresh, 'no' );
 
 	// Tell WordPress to look for updates.
-	if( $wp_check_updates ) {
+	if ( $wp_check_updates ) {
 		set_site_transient( 'update_plugins', null );
 	}
 

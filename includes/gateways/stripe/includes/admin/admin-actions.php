@@ -23,6 +23,10 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return void
  */
 function give_stripe_connect_save_options() {
+	// Is user have permission to edit give setting.
+	if ( ! current_user_can( 'manage_give_settings' ) ) {
+		return;
+	}
 
 	$get_vars = give_clean( $_GET );
 
@@ -34,7 +38,7 @@ function give_stripe_connect_save_options() {
 		|| ! isset( $get_vars['stripe_access_token_test'] )
 		|| ! isset( $get_vars['connected'] )
 	) {
-		return false;
+		return;
 	}
 
 	// Update keys.
@@ -72,7 +76,7 @@ function give_stripe_connect_deauthorize() {
 		$class   = 'notice notice-warning give-stripe-disconnect-message';
 		$message = sprintf(
 			/* translators: %s Error Message */
-			__( '<strong>Error:</strong> Give could not disconnect from the Stripe API. Reason: %s', 'give' ),
+			__( '<strong>Error:</strong> GiveWP could not disconnect from the Stripe API. Reason: %s', 'give' ),
 			esc_html( $get_vars['error_message'] )
 		);
 
@@ -265,11 +269,6 @@ function give_stripe_show_connect_banner() {
 		$status = false;
 	}
 
-	// Is the notice temporarily dismissed?
-	if ( give_stripe_is_connect_banner_dismissed() ) {
-		$status = false;
-	}
-
 	/**
 	 * This filter hook is used to decide whether the connect button banner need to be displayed or not.
 	 *
@@ -285,7 +284,7 @@ function give_stripe_show_connect_banner() {
 	$connect_link = give_stripe_connect_button();
 
 	// Default message.
-	$main_text = __( 'The Stripe gateway is enabled but you\'re not connected. Connect to Stripe to start accepting credit card donations directly on your website. <a href="#" class="give-stripe-connect-temp-dismiss">Not right now <span class="dashicons dashicons-dismiss"></span></a>', 'give' );
+	$main_text = __( 'The Stripe gateway is enabled but you\'re not connected. Connect to Stripe to start accepting credit card donations directly on your website.', 'give' );
 
 	/**
 	 * This filter hook is used to change the text of the connect banner.
@@ -298,37 +297,19 @@ function give_stripe_show_connect_banner() {
 
 	$message = sprintf(
 		/* translators: 1. Main Text, 2. Connect Link */
-		__( '<strong>Stripe Connect:</strong> %1$s %2$s', 'give' ),
+        __( '<p><strong>Stripe Connect:</strong> %1$s </p>%2$s', 'give' ),
 		$main_text,
 		$connect_link
 	);
 
-	?>
-	<div class="notice notice-warning give-stripe-connect-message">
-		<p>
-			<?php echo $message; ?>
-		</p>
-	</div>
-	<?php
+	// Register Notice.
+	Give()->notices->register_notice( array(
+		'id'               => 'give-stripe-connect-banner',
+		'description'      => $message,
+		'type'             => 'warning',
+		'dismissible_type' => 'user',
+		'dismiss_interval' => 'shortly',
+	) );
 }
 
 add_action( 'admin_notices', 'give_stripe_show_connect_banner' );
-
-/**
- * Dismiss connect banner temporarily.
- *
- * Sets transient via AJAX callback.
- *
- * @since 2.5.0
- */
-function give_stripe_connect_dismiss_banner() {
-
-	$user_id             = get_current_user_id();
-	$is_banner_dismissed = set_transient( "give_hide_stripe_connect_notice_{$user_id}", '1', DAY_IN_SECONDS );
-
-	echo $is_banner_dismissed ? 'success' : 'failed';
-	give_die();
-}
-
-add_action( 'wp_ajax_give_stripe_connect_dismiss', 'give_stripe_connect_dismiss_banner' );
-
