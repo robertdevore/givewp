@@ -130,7 +130,7 @@ jQuery(window).load(function(){
 		var clone           = notice.cloneNode(true);
 		clone.style.display = 'block';
 		Toasti.show({
-			position: 'bottom-right',
+			position: 'top-right',
 			modClass: 'demo',
 			message: clone.outerHTML,
 			hideByClick: false,
