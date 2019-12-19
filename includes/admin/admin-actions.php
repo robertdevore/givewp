@@ -552,6 +552,40 @@ function _give_show_test_mode_notice_in_admin_bar( $wp_admin_bar ) {
 add_action( 'admin_bar_menu', '_give_show_test_mode_notice_in_admin_bar', 1000, 1 );
 
 /**
+ * Add Notice center menu bar.
+ *
+ * @param $wp_admin_bar WP_Admin_Bar
+ *
+ * @return bool
+ */
+function _give_notice_center_in_admin_bar( $wp_admin_bar ) {
+
+	// Only those with special access.
+	if ( ! current_user_can( 'view_give_reports' ) ) {
+		return false;
+	}
+
+	// Add the main site admin menu item.
+	$wp_admin_bar->add_menu(
+		array(
+			'id'     => 'give-notice-center',
+			'href'   => '#',
+			'parent' => 'top-secondary',
+			'title'  => '<span class="update-plugins"><span class="plugin-count"></span></span> <span class="give-notice-center-icon dashicons dashicons-give"></span><span class="give-notice-center-text">' . esc_html__( 'GiveWP', 'jetpack' ) . '</span>',
+			'meta'   => array(
+				'html' => '<div class="give-notice-center-inner"></div>',
+				'class' => 'give-notice-center',
+			),
+		)
+	);
+
+	return true;
+
+}
+
+add_action( 'admin_bar_menu', '_give_notice_center_in_admin_bar', 1000, 1 );
+
+/**
  * Outputs the Give admin bar CSS.
  */
 function _give_test_mode_notice_admin_bar_css() {

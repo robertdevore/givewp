@@ -36,8 +36,8 @@
   }
 
   &--top-right {
-	right: 20px;
-	top: 20px;
+	right: 0;
+	top: 40px;
 	transform: translate3d(0, calc(-100% - 20px), 0);
   }
 
@@ -64,31 +64,81 @@
   }
 
   .give-notice {
-	display: block ! important;
+	display: block !important;
   }
+
 }
 
-.toasti.alert {
-  background-color: #d85757;
-}
+// Notice Center
+#wpadminbar {
 
-.toasti.info {
-  background-color: #75b4e6;
-  background-image: linear-gradient(
-				  -45deg,
-				  rgba(#fff, 0.1) 25%,
-				  rgba(#000, 0) 25%,
-				  rgba(#000, 0) 50%,
-				  rgba(#fff, 0.1) 50%,
-				  rgba(#fff, 0.1) 75%,
-				  rgba(#000, 0) 75%,
-				  rgba(#000, 0)
-  );
-  background-size: 20px 20px;
+  .give-notice-center-inner {
+	display: none;
+	background: #23282d;
+	box-shadow: 0 7px 20px 4px #0000006e;
+	width: 300px;
+	height: auto;
+	max-height: 300px;
+	overflow-y: visible;
+	overflow-x: hidden;
+	position: absolute;
+	right: 0;
+	left: auto;
+	padding: 20px;
+  }
+
+  .give-notice {
+	display: block !important;
+	margin: 0 0 20px;
+	color: #333;
+	padding: 8px 12px;
+	line-height: 18px;
+	font-size: 13px;
+
+	// WP admin style overrides
+	p {
+	  line-height: 18px;
+	  font-size: 13px;
+	  a {
+	  	line-height: 18px;
+		display: inline;
+		padding: 0;
+		margin: 0;
+	  }
+	}
+
+
+  }
+
+  // Text is for screen readers only.
+  .give-notice-center-text {
+	display: none;
+  }
+
+  .dashicons-give {
+	margin-top: 3px;
+
+	&:before {
+	  font-size: 20px;
+	  height: 20px;
+	  width: 20px;
+	}
+
+
+  }
+
 }
 
 
 // Hide default non-GiveWP notices.
-#wpwrap .notice {
-  display: none !important;
+#wpwrap .notice,
+#wpwrap .error,
+#wpwrap .updated,
+#ithemes-sync-notice {
+
+  //  Not our notices.
+  &:not(.give-notice ) {
+	display: none !important;
+  }
+
 }
