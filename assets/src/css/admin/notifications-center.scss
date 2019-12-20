@@ -1,0 +1,118 @@
+// Notice Center
+#wpadminbar {
+
+  .give-notice-center {
+	.ab-item {
+	  padding: 0 14px 0 10px !important;
+	}
+  }
+
+  .give-notice-center-inner {
+	display: none;
+	background: #23282d;
+	box-shadow: 0 7px 20px 4px #0000006e;
+	width: 300px;
+	height: auto;
+	max-height: 300px;
+	overflow-y: visible;
+	overflow-x: hidden;
+	position: absolute;
+	left: 0;
+	padding: 20px;
+  }
+
+  .give-notice {
+	display: block !important;
+	margin: 0 0 20px;
+	color: #333;
+	padding: 8px 12px;
+	line-height: 18px;
+	font-size: 13px;
+
+	&:last-child {
+	  margin-bottom: 0;
+	}
+
+	// WP admin style overrides
+	p {
+	  line-height: 18px;
+	  font-size: 13px;
+
+	  * {
+		line-height: 18px;
+		display: inline;
+		padding: 0;
+		margin: 0;
+	  }
+
+	}
+
+  }
+
+  // Text is for screen readers only.
+  .give-notice-center-text {
+	display: none;
+  }
+
+  // Bell icon.
+  // From https://codepen.io/brettgardner/pen/RrPVKP
+  .give-notice-center-bell {
+	display: inline-block;
+
+	@keyframes bellring {
+	  0% { transform: rotate(0deg); }
+	  10% { transform: rotate(10deg); }
+	  20% { transform: rotate(-10deg); }
+	  30% { transform: rotate(10deg); }
+	  40% { transform: rotate(-10deg);}
+	  50% { transform: rotate(0deg);}
+	}
+
+	svg {
+	  height: 18px;
+	  width: 18px;
+	  transform-origin: 50% 50%;
+	  animation-name: bellring;
+	  animation-duration: 1s;
+	  animation-timing-function: ease-in-out;
+	  animation-iteration-count: infinite;
+	  margin-top: 7px;
+
+	  * {
+		fill: orange;
+	  }
+
+	}
+
+  }
+
+  .dashicons-give {
+	padding-top: 5px !important;
+
+	&:before {
+	  font-size: 20px;
+	  height: 20px;
+	  width: 20px;
+	}
+  }
+
+  // Notification bubble.
+  .give-notification-count-container {
+	margin: 0;
+	padding: 0;
+	color: #fff;
+	position: absolute;
+	top: 5px;
+	left: auto;
+	right: 5px;
+	height: 10px;
+	line-height: 10px;
+
+	> span {
+	  font-size: 10px;
+	  height: 10px;
+	  line-height: 10px;
+	}
+  }
+
+}

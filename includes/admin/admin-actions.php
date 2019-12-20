@@ -565,13 +565,14 @@ function _give_notice_center_in_admin_bar( $wp_admin_bar ) {
 		return false;
 	}
 
+	$bell = '<div class="give-notice-center-bell"><svg enable-background="new 0 0 44 45" height="45px" id="Layer_1" version="1.1" viewBox="0 0 44 45" width="44px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><path d="M40,30h-1V19c0-7.281-5.189-13.347-12.071-14.709C26.581,1.868,24.518,0,22,0   c-2.518,0-4.581,1.868-4.929,4.291C10.19,5.653,5,11.719,5,19v11H4c-2.209,0-4,1.791-4,4s1.791,4,4,4h36c2.209,0,4-1.791,4-4   S42.209,30,40,30z" fill="#231F20"/><path d="M22,45c2.762,0,5-2.238,5-5H17C17,42.762,19.239,45,22,45z" fill="#231F20"/></g></svg></div><div class="give-notification-count-container"><span class="give-notification-count-value">0</span></div>';
+
 	// Add the main site admin menu item.
 	$wp_admin_bar->add_menu(
 		array(
 			'id'     => 'give-notice-center',
 			'href'   => '#',
-			'parent' => 'top-secondary',
-			'title'  => '<span class="update-plugins"><span class="plugin-count"></span></span> <span class="give-notice-center-icon dashicons dashicons-give"></span><span class="give-notice-center-text">' . esc_html__( 'GiveWP', 'jetpack' ) . '</span>',
+			'title'  => '<span class="ab-icon give-notice-center-icon dashicons dashicons-give"></span><span class="give-notice-center-text">' . esc_html__( 'GiveWP', 'give' ) . '</span>' . $bell,
 			'meta'   => array(
 				'html' => '<div class="give-notice-center-inner"></div>',
 				'class' => 'give-notice-center',

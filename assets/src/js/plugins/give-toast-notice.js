@@ -140,23 +140,24 @@ jQuery( window ).load( function() {
 		} );
 	} );
 
-	jQuery( document ).on( 'click', '.notice-dismiss', function() {
-		if ( !jQuery( this ).parents( '.toasti__body' ) ) {
-			return;
-		}
-		jQuery( this ).parent( '.give-notice' ).slideUp( 'normal', function() {
-			jQuery( this ).remove();
-		} );
-	} );
+	// jQuery( document ).on( 'click', '.notice-dismiss', function() {
+	// 	if ( !jQuery( this ).parents( '.toasti__body' ) ) {
+	// 		return;
+	// 	}
+	// 	jQuery( this ).parent( '.give-notice' ).slideUp( 'normal', function() {
+	// 		jQuery( this ).remove();
+	// 	} );
+	// } );
 
 	// Place non-Toast notices in menu bar
 	document.querySelectorAll( '.give-notice:not(.updated)' ).forEach( function( notice, index ) {
 		var clone = notice.cloneNode( true );
 
 		// Add notice count.
-		jQuery('.give-notice-center .plugin-count').html(index);
+		jQuery( '.give-notification-count-value' ).html( index + 1 );
 
-		jQuery('.give-notice-center-inner').append(clone);
+		// Clone notices to container.
+		jQuery( '.give-notice-center-inner' ).append( clone );
 	} );
 
 	// Custom menu bar.
