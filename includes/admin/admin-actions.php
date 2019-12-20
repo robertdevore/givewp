@@ -587,31 +587,6 @@ function _give_notice_center_in_admin_bar( $wp_admin_bar ) {
 add_action( 'admin_bar_menu', '_give_notice_center_in_admin_bar', 1000, 1 );
 
 /**
- * Outputs the Give admin bar CSS.
- */
-function _give_test_mode_notice_admin_bar_css() {
-	if ( ! give_is_test_mode() ) {
-		return;
-	}
-	?>
-	<style>
-		#wpadminbar .give-test-mode-active > .ab-item {
-			color: #fff;
-			background-color: #ffba00;
-		}
-
-		#wpadminbar .give-test-mode-active:hover > .ab-item, #wpadminbar .give-test-mode-active:hover > .ab-item {
-			background-color: rgba(203, 144, 0, 1) !important;
-			color: #fff !important;
-		}
-	</style>
-	<?php
-}
-
-add_action( 'admin_head', '_give_test_mode_notice_admin_bar_css' );
-
-
-/**
  * Add Link to Import page in from donation archive and donation single page
  *
  * @since 1.8.13
