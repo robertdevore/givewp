@@ -328,4 +328,21 @@ class Tests_Emails extends Give_Unit_Test_Case {
 		$this->assertEquals( $expected, $message );
 	}
 
+
+	/**
+	 * Test if donation related email notifications triggered after donation complete.
+	 *
+	 * When donation completes then notification will be send to donor and admin.
+	 */
+	public function test_donation_related_notification() {
+		$payment = new Give_Payment( $this->_payment_id );
+
+		$payment->status = 'complete';
+
+		$payment->save();
+
+		$this->assertTrue((bool) did_action('give_donation-receipt_email_notification') );
+		$this->assertTrue((bool) did_action('give_new-donation_email_notification') );
+	}
+
 }
