@@ -135,8 +135,9 @@ function give_form_shortcode( $atts ) {
 	$atts = shortcode_atts( give_get_default_form_shortcode_args(), $atts, 'give_form' );
 
 	// Convert string to bool.
-	$atts['show_title'] = filter_var( $atts['show_title'], FILTER_VALIDATE_BOOLEAN );
-	$atts['show_goal']  = filter_var( $atts['show_goal'], FILTER_VALIDATE_BOOLEAN );
+	$atts['show_title']   = filter_var( $atts['show_title'], FILTER_VALIDATE_BOOLEAN );
+	$atts['show_goal']    = filter_var( $atts['show_goal'], FILTER_VALIDATE_BOOLEAN );
+	$atts['float_labels'] = filter_var( $atts['float_labels'], FILTER_VALIDATE_BOOLEAN );
 
 	// Fetch the Give Form.
 	ob_start();
