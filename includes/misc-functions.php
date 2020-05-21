@@ -847,6 +847,12 @@ function give_get_plugins( $args = array() ) {
 		$premium_addons_list = give_get_premium_add_ons();
 
 		foreach ( $plugins as $key => $plugin ) {
+			// Only give add-on can be a premium other, exit otherwise.
+			if ( 'add-on' !== $plugin['Type'] ) {
+				unset( $plugins[ $key ] );
+				continue;
+			}
+
 			$addon_shortname = str_replace( 'give-', '', $plugin['Dir'] );
 			$tmp             = $premium_addons_list;
 			$is_premium      = count(
