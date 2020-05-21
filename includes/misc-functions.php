@@ -852,16 +852,13 @@ function give_get_plugins( $args = array() ) {
 			$is_premium      = count(
 				array_filter(
 					$tmp,
-					function( $plugin ) use ( $addon_shortname ) {
+					static function( $plugin ) use ( $addon_shortname ) {
 						return false !== strpos( $plugin, $addon_shortname );
 					}
 				)
 			);
 
-			if (
-				'add-on' !== $plugin['Type']
-				|| ( false === strpos( $plugin['PluginURI'], 'givewp.com' ) && ! $is_premium )
-			) {
+			if ( ! $is_premium ) {
 				unset( $plugins[ $key ] );
 			}
 		}
