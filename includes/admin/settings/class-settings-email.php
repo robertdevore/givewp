@@ -150,7 +150,7 @@ if ( ! class_exists( 'Give_Settings_Email' ) ) :
 						array(
 							'name'    => __( 'Admin Email Address', 'give' ),
 							'id'      => 'contact_admin_email',
-							'desc'    => sprintf( '%1$s <code>{admin_email}</code> %2$s', __( 'By default, the', 'give' ), __( 'tag will use your WordPress admin email. If you would like to customize this address you can do so in the field above.', 'give' ) ),
+							'desc'    => sprintf( '%1$s <code>{admin_email}</code> %2$s', __( 'By default, the', 'give' ), __( 'tag will use your WordPress admin email. If you would like to customize the admin email address you can update it here.', 'give' ) ),
 							'type'    => 'text',
 							'default' => give_email_admin_email(),
 

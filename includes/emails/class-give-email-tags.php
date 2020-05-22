@@ -49,9 +49,6 @@ class Give_Email_Template_Tags {
 	/**
 	 * Add an email tag.
 	 *
-	 * @since 1.0
-	 * @since 2.2.1 Deprecated function argument and accept them as array
-	 *
 	 * @param array $args     {
 	 *
 	 * @type string $tag      Email template tag name. The name of the tag to register, such as “engraving_message” as
@@ -67,9 +64,14 @@ class Give_Email_Template_Tags {
 	 *               form – information related to the donation form
 	 *               donor – information related to the donor such as first name or last name.
 	 *               general – appears on all emails
-	 * @type bool   $is_admin Flag to check to show email template tag on email edit screen or not. Whether this tag should only be available to admins. Usually reserved for tags with sensitive information. Default is false.
+	 * @type bool   $is_admin Flag to check to show email template tag on email edit screen or not. Whether this tag
+	 *       should only be available to admins. Usually reserved for tags with sensitive information. Default is
+	 *       false.
 	 *
 	 * }
+	 * @since 2.2.1 Deprecated function argument and accept them as array
+	 *
+	 * @since 1.0
 	 */
 	public function add( $args ) {
 		__give_211_bc_email_template_tag_param( $args, func_get_args() );
@@ -90,9 +92,10 @@ class Give_Email_Template_Tags {
 	/**
 	 * Remove an email tag.
 	 *
+	 * @param string $tag Email tag to remove hook from
+	 *
 	 * @since 1.0
 	 *
-	 * @param string $tag Email tag to remove hook from
 	 */
 	public function remove( $tag ) {
 		unset( $this->tags[ $tag ] );
@@ -101,11 +104,11 @@ class Give_Email_Template_Tags {
 	/**
 	 * Check if $tag is a registered email tag.
 	 *
-	 * @since 1.0
-	 *
 	 * @param string $tag Email tag that will be searched.
 	 *
 	 * @return bool
+	 * @since 1.0
+	 *
 	 */
 	public function email_tag_exists( $tag ) {
 		return array_key_exists( $tag, $this->tags );
@@ -114,13 +117,13 @@ class Give_Email_Template_Tags {
 	/**
 	 * Returns a list of all email tags
 	 *
-	 * @since 1.0
-	 * @since 2.0 Add $context_type param to get specific context email tags.
-	 *
 	 * @param string $context_type
 	 * @param string $field
 	 *
 	 * @return array
+	 * @since 2.0 Add $context_type param to get specific context email tags.
+	 *
+	 * @since 1.0
 	 */
 	public function get_tags( $context_type = 'all', $field = '' ) {
 		$tags = $this->tags;
@@ -150,11 +153,11 @@ class Give_Email_Template_Tags {
 	 * @param string $content  Content to search for email tags.
 	 * @param array  $tag_args Email template tag arguments.
 	 *
-	 * @since 1.0
+	 * @return string Content with email tags filtered out.
 	 * @since 2.0 $payment_id deprecated.
 	 * @since 2.0 $tag_args added.
 	 *
-	 * @return string Content with email tags filtered out.
+	 * @since 1.0
 	 */
 	public function do_tags( $content, $tag_args ) {
 
@@ -175,11 +178,11 @@ class Give_Email_Template_Tags {
 	/**
 	 * Do a specific tag, this function should not be used. Please use give_do_email_tags instead.
 	 *
-	 * @since 1.0
-	 *
 	 * @param $m array
 	 *
 	 * @return mixed
+	 * @since 1.0
+	 *
 	 */
 	public function do_tag( $m ) {
 
@@ -199,11 +202,12 @@ class Give_Email_Template_Tags {
 /**
  * Add an email tag.
  *
- * @since 1.0
- * @since 2.2.1 Deprecate function argument and accept them as array
- *
  * @param array $args Email template tag argument
  *                    Check Give_Email_Template_Tags::add function description for more information
+ *
+ * @since 2.2.1 Deprecate function argument and accept them as array
+ *
+ * @since 1.0
  */
 function give_add_email_tag( $args ) {
 	__give_211_bc_email_template_tag_param( $args, func_get_args() );
@@ -214,9 +218,10 @@ function give_add_email_tag( $args ) {
 /**
  * Remove an email tag
  *
+ * @param string $tag Email tag to remove hook from
+ *
  * @since 1.0
  *
- * @param string $tag Email tag to remove hook from
  */
 function give_remove_email_tag( $tag ) {
 	Give()->email_tags->remove( $tag );
@@ -225,11 +230,11 @@ function give_remove_email_tag( $tag ) {
 /**
  * Check if $tag is a registered email tag
  *
- * @since 1.0
- *
  * @param string $tag Email tag that will be searched
  *
  * @return bool
+ * @since 1.0
+ *
  */
 function give_email_tag_exists( $tag ) {
 	return Give()->email_tags->email_tag_exists( $tag );
@@ -238,9 +243,9 @@ function give_email_tag_exists( $tag ) {
 /**
  * Get all email tags
  *
+ * @return array
  * @since 1.0
  *
- * @return array
  */
 function give_get_email_tags() {
 	return Give()->email_tags->get_tags();
@@ -249,9 +254,9 @@ function give_get_email_tags() {
 /**
  * Get a formatted HTML list of all available email tags
  *
+ * @return string
  * @since 1.0
  *
- * @return string
  */
 function give_get_emails_tags_list() {
 
@@ -267,7 +272,7 @@ function give_get_emails_tags_list() {
 				</span>
 			<?php endforeach; ?>
 		</div>
-		<?php
+	<?php
 	endif;
 
 	// Return the list.
@@ -280,11 +285,11 @@ function give_get_emails_tags_list() {
  * @param string    $content  Content to search for email tags.
  * @param array|int $tag_args Email template tag arguments.
  *
- * @since 1.0
+ * @return string Content with email tags filtered out.
  * @since 2.0 $payment_id deprecated.
  * @since 2.0 $tag_args added.
  *
- * @return string Content with email tags filtered out.
+ * @since 1.0
  */
 function give_do_email_tags( $content, $tag_args ) {
 	// Backward compatibility < 2.0
@@ -575,10 +580,11 @@ function give_email_tag_first_name( $tag_args ) {
 	/**
 	 * Filter the {firstname} email template tag output.
 	 *
-	 * @since 2.0
-	 *
 	 * @param string $firstname
 	 * @param array  $tag_args
+	 *
+	 * @since 2.0
+	 *
 	 */
 	$firstname = apply_filters( 'give_email_tag_first_name', $firstname, $tag_args );
 
@@ -624,10 +630,11 @@ function give_email_tag_fullname( $tag_args ) {
 	/**
 	 * Filter the {fullname} email template tag output.
 	 *
-	 * @since 2.0
-	 *
 	 * @param string $fullname
 	 * @param array  $tag_args
+	 *
+	 * @since 2.0
+	 *
 	 */
 	$fullname = apply_filters( 'give_email_tag_fullname', $fullname, $tag_args );
 
@@ -677,10 +684,11 @@ function give_email_tag_username( $tag_args ) {
 	/**
 	 * Filter the {username} email template tag output.
 	 *
-	 * @since 2.0
-	 *
 	 * @param string $username
 	 * @param array  $tag_args
+	 *
+	 * @since 2.0
+	 *
 	 */
 	$username = apply_filters( 'give_email_tag_username', $username, $tag_args );
 
@@ -725,10 +733,11 @@ function give_email_tag_user_email( $tag_args ) {
 	/**
 	 * Filter the {email} email template tag output.
 	 *
-	 * @since 2.0
-	 *
 	 * @param string $email
 	 * @param array  $tag_args
+	 *
+	 * @since 2.0
+	 *
 	 */
 	$email = apply_filters( 'give_email_tag_user_email', $email, $tag_args );
 
@@ -754,8 +763,8 @@ function give_email_tag_billing_address( $tag_args ) {
 		case give_check_variable( $tag_args, 'isset', 0, 'payment_id' ):
 			$donation_address = give_get_donation_address( $tag_args['payment_id'] );
 
-			$billing_address                    = array();
-			$billing_address['street_address']  = '';
+			$billing_address                   = array();
+			$billing_address['street_address'] = '';
 			$billing_address['street_address'] .= $donation_address['line1'];
 
 			if ( ! empty( $donation_address['line2'] ) ) {
@@ -775,10 +784,11 @@ function give_email_tag_billing_address( $tag_args ) {
 	/**
 	 * Filter the {billing_address} email template tag output.
 	 *
-	 * @since 2.0
-	 *
 	 * @param string $address
 	 * @param array  $tag_args
+	 *
+	 * @since 2.0
+	 *
 	 */
 	$address = apply_filters( 'give_email_tag_billing_address', $address, $tag_args );
 
@@ -809,10 +819,11 @@ function give_email_tag_date( $tag_args ) {
 	/**
 	 * Filter the {date} email template tag output.
 	 *
-	 * @since 2.0
-	 *
 	 * @param string $date
 	 * @param array  $tag_args
+	 *
+	 * @since 2.0
+	 *
 	 */
 	$date = apply_filters( 'give_email_tag_date', $date, $tag_args );
 
@@ -844,10 +855,11 @@ function give_email_tag_amount( $tag_args ) {
 	/**
 	 * Filter the {amount} email template tag output.
 	 *
-	 * @since 2.0
-	 *
 	 * @param string $amount
 	 * @param array  $tag_args
+	 *
+	 * @since 2.0
+	 *
 	 */
 	$amount = apply_filters( 'give_email_tag_amount', $amount, $tag_args );
 
@@ -891,10 +903,11 @@ function give_email_tag_payment_id( $tag_args ) {
 	/**
 	 * Filter the {payment_id} email template tag output.
 	 *
-	 * @since 2.0
-	 *
 	 * @param string $payment_id
 	 * @param array  $tag_args
+	 *
+	 * @since 2.0
+	 *
 	 */
 	return apply_filters( 'give_email_tag_payment_id', $payment_id, $tag_args );
 }
@@ -934,10 +947,11 @@ function give_email_tag_donation( $tag_args ) {
 	/**
 	 * Filter the {donation_form_title} email template tag output.
 	 *
-	 * @since 2.0
-	 *
 	 * @param string $donation_form_title
 	 * @param array  $tag_args
+	 *
+	 * @since 2.0
+	 *
 	 */
 	return apply_filters(
 		'give_email_tag_donation',
@@ -956,7 +970,6 @@ function give_email_tag_donation( $tag_args ) {
  * @return string $form_title
  */
 function give_email_tag_form_title( $tag_args ) {
-	$donation_form_title = '';
 
 	// Backward compatibility.
 	$tag_args = __give_20_bc_str_type_email_tag_param( $tag_args );
@@ -965,15 +978,19 @@ function give_email_tag_form_title( $tag_args ) {
 		case give_check_variable( $tag_args, 'isset', 0, 'payment_id' ):
 			$donation_form_title = give_get_payment_meta( $tag_args['payment_id'], '_give_payment_form_title' );
 			break;
+		default:
+			$donation_form_title = get_the_title( ( $tag_args['form_id'] ) );
+			break;
 	}
 
 	/**
 	 * Filter the {form_title} email template tag output.
 	 *
-	 * @since 2.0
-	 *
 	 * @param string $form_title
 	 * @param array  $tag_args
+	 *
+	 * @since 2.0
+	 *
 	 */
 	return apply_filters(
 		'give_email_tag_form_title',
@@ -986,11 +1003,11 @@ function give_email_tag_form_title( $tag_args ) {
  * Email template tag: {company_name}
  * Output the donation form company name filed.
  *
- * @since 2.1.0
- *
  * @param array $tag_args
  *
  * @return string $company_name
+ * @since 2.1.0
+ *
  */
 function give_email_tag_company_name( $tag_args ) {
 	$company_name = '';
@@ -1007,10 +1024,11 @@ function give_email_tag_company_name( $tag_args ) {
 	/**
 	 * Filter the {company_name} email template tag output.
 	 *
-	 * @since 2.1.0
-	 *
 	 * @param string $company_name
 	 * @param array  $tag_args
+	 *
+	 * @since 2.1.0
+	 *
 	 */
 	return apply_filters(
 		'give_email_tag_company_name',
@@ -1046,10 +1064,11 @@ function give_email_tag_payment_method( $tag_args ) {
 	/**
 	 * Filter the {payment_method} email template tag output.
 	 *
-	 * @since 2.0
-	 *
 	 * @param string $payment_method
 	 * @param array  $tag_args
+	 *
+	 * @since 2.0
+	 *
 	 */
 	return apply_filters(
 		'give_email_tag_payment_method',
@@ -1064,11 +1083,11 @@ function give_email_tag_payment_method( $tag_args ) {
  *
  * The payment donation for this donation.
  *
- * @since 1.8
- *
  * @param array $tag_args
  *
  * @return string
+ * @since 1.8
+ *
  */
 function give_email_tag_payment_total( $tag_args ) {
 	$payment_total = '';
@@ -1086,10 +1105,11 @@ function give_email_tag_payment_total( $tag_args ) {
 	/**
 	 * Filter the {payment_total} email template tag output.
 	 *
-	 * @since 2.0
-	 *
 	 * @param string $payment_total
 	 * @param array  $tag_args
+	 *
+	 * @since 2.0
+	 *
 	 */
 	return apply_filters(
 		'give_email_tag_payment_total',
@@ -1116,10 +1136,11 @@ function give_email_tag_sitename( $tag_args = array() ) {
 	/**
 	 * Filter the {sitename} email template tag output.
 	 *
-	 * @since 2.0
-	 *
 	 * @param string $sitename
 	 * @param array  $tag_args
+	 *
+	 * @since 2.0
+	 *
 	 */
 	return apply_filters(
 		'give_email_tag_sitename',
@@ -1154,10 +1175,11 @@ function give_email_tag_receipt_link( $tag_args ) {
 	/**
 	 * Filter the {receipt_link} email template tag output.
 	 *
-	 * @since 2.0
-	 *
 	 * @param string $formatted
 	 * @param array  $tag_args
+	 *
+	 * @since 2.0
+	 *
 	 */
 	return apply_filters(
 		'give_email_tag_receipt_link',
@@ -1171,11 +1193,11 @@ function give_email_tag_receipt_link( $tag_args ) {
  *
  * The donation receipt direct URL, to view the receipt on the website.
  *
- * @since 1.7
- *
  * @param array $tag_args
  *
  * @return string receipt_url
+ * @since 1.7
+ *
  */
 function give_email_tag_receipt_link_url( $tag_args ) {
 	// Backward compatibility.
@@ -1186,10 +1208,11 @@ function give_email_tag_receipt_link_url( $tag_args ) {
 	/**
 	 * Filter the {receipt_link_url} email template tag output.
 	 *
-	 * @since 2.0
-	 *
 	 * @param string $receipt_link_url
 	 * @param array  $tag_args
+	 *
+	 * @since 2.0
+	 *
 	 */
 	return apply_filters(
 		'give_email_tag_receipt_link_url',
@@ -1201,11 +1224,11 @@ function give_email_tag_receipt_link_url( $tag_args ) {
 /**
  * Email template tag: {donation_history_link}
  *
- * @since 2.0
- *
  * @param array $tag_args Email Tag Arguments.
  *
  * @return string
+ * @since 2.0
+ *
  */
 function give_email_tag_donation_history_link( $tag_args ) {
 	$donor_id          = 0;
@@ -1287,10 +1310,11 @@ function give_email_tag_donation_history_link( $tag_args ) {
 	/**
 	 * Filter the {donation_history_link} email template tag output.
 	 *
-	 * @since 2.0
-	 *
 	 * @param string $receipt_link_url
 	 * @param array  $tag_args
+	 *
+	 * @since 2.0
+	 *
 	 */
 	return apply_filters(
 		'give_email_tag_email_access_link',
@@ -1305,11 +1329,11 @@ function give_email_tag_donation_history_link( $tag_args ) {
  *
  * Note: from 2.0 email tag render function will start accepting array values.
  *
- * @since 2.0
- *
  * @param $tag_args
  *
  * @return array
+ * @since 2.0
+ *
  */
 function __give_20_bc_str_type_email_tag_param( $tag_args ) {
 	if ( ! is_array( $tag_args ) ) {
@@ -1390,9 +1414,9 @@ function __give_211_bc_email_template_tag_param( &$args, $func_args = array() ) 
  * @param array $tag_args   Array of arguments for email tags.
  * @param int   $payment_id Donation ID.
  *
+ * @return array
  * @since 2.0
  *
- * @return array
  */
 function give_email_tag_reset_password_link( $tag_args, $payment_id ) {
 	$user_id = 0;
@@ -1450,9 +1474,9 @@ function give_email_tag_reset_password_link( $tag_args, $payment_id ) {
  *
  * @param array $tag_args Array of arguments for email tags.
  *
+ * @return array
  * @since 2.0
  *
- * @return array
  */
 function give_email_tag_donor_note( $tag_args ) {
 	$donor_note = '';
@@ -1494,9 +1518,9 @@ function give_email_tag_donor_note( $tag_args ) {
  *
  * @param $user_id
  *
+ * @return mixed|string
  * @since 2.0
  *
- * @return mixed|string
  */
 function give_get_reset_password_url( $user_id ) {
 	$reset_password_url = '';
@@ -1526,9 +1550,9 @@ function give_get_reset_password_url( $user_id ) {
 /**
  * Get custom admin email.
  *
+ * @return string
  * @since 2.2
  *
- * @return string
  */
 function give_email_admin_email() {
 
@@ -1546,9 +1570,9 @@ function give_email_admin_email() {
 /**
  * Get site URL.
  *
+ * @return string
  * @since 2.2
  *
- * @return string
  */
 function give_email_site_url() {
 	return get_bloginfo( 'url' );
@@ -1558,9 +1582,9 @@ function give_email_site_url() {
 /**
  * Get custom offline mailing address.
  *
+ * @return string
  * @since 2.2
  *
- * @return string
  */
 function give_email_offline_mailing_address() {
 	$offline_address = give_get_option( 'contact_offline_mailing_address' );
@@ -1579,9 +1603,9 @@ function give_email_offline_mailing_address() {
  *
  * @param array $tag_args Array of arguments for email tags.
  *
+ * @return string
  * @since 2.3.0
  *
- * @return string
  */
 function give_email_donor_comment( $tag_args ) {
 
@@ -1603,13 +1627,13 @@ function give_email_donor_comment( $tag_args ) {
  * This function helps to render meta data with from dynamic meta data email tag.
  * Note: meta data email tag must be in given format {meta_*}
  *
- * @since 2.0.3
- * @see   https://github.com/impress-org/give/issues/2801#issuecomment-365136602
- *
  * @param $content
  * @param $tag_args
  *
  * @return mixed
+ * @see   https://github.com/impress-org/give/issues/2801#issuecomment-365136602
+ *
+ * @since 2.0.3
  */
 function __give_render_metadata_email_tag( $content, $tag_args ) {
 	preg_match_all( '/{meta_([A-z0-9\-\_\ ]+)}/s', $content, $matches );

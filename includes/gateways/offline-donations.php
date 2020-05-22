@@ -79,23 +79,23 @@ add_action( 'give_before_offline_info_fields', 'give_offline_billing_fields', 10
  *
  * @since  1.0
  *
- * @param $purchase_data
+ * @param $donation_data
  *
  * @return void
  */
-function give_offline_process_payment( $purchase_data ) {
+function give_offline_process_payment( $donation_data ) {
 
 	// Setup the payment details.
 	$payment_data = array(
-		'price'           => $purchase_data['price'],
-		'give_form_title' => $purchase_data['post_data']['give-form-title'],
-		'give_form_id'    => intval( $purchase_data['post_data']['give-form-id'] ),
-		'give_price_id'   => isset( $purchase_data['post_data']['give-price-id'] ) ? $purchase_data['post_data']['give-price-id'] : '',
-		'date'            => $purchase_data['date'],
-		'user_email'      => $purchase_data['user_email'],
-		'purchase_key'    => $purchase_data['purchase_key'],
-		'currency'        => give_get_currency( $purchase_data['post_data']['give-form-id'], $purchase_data ),
-		'user_info'       => $purchase_data['user_info'],
+		'price'           => $donation_data['price'],
+		'give_form_title' => $donation_data['post_data']['give-form-title'],
+		'give_form_id'    => intval( $donation_data['post_data']['give-form-id'] ),
+		'give_price_id'   => isset( $donation_data['post_data']['give-price-id'] ) ? $donation_data['post_data']['give-price-id'] : '',
+		'date'            => $donation_data['date'],
+		'user_email'      => $donation_data['user_email'],
+		'purchase_key'    => $donation_data['purchase_key'],
+		'currency'        => give_get_currency( $donation_data['post_data']['give-form-id'], $donation_data ),
+		'user_info'       => $donation_data['user_info'],
 		'status'          => 'pending',
 		'gateway'         => 'offline',
 	);
@@ -107,7 +107,7 @@ function give_offline_process_payment( $purchase_data ) {
 		give_send_to_success_page();
 	} else {
 		// if errors are present, send the user back to the donation form so they can be corrected
-		give_send_back_to_checkout( '?payment-mode=' . $purchase_data['post_data']['give-gateway'] );
+		give_send_back_to_checkout( '?payment-mode=' . $donation_data['post_data']['give-gateway'] );
 	}
 
 }
@@ -423,7 +423,7 @@ function give_get_offline_payment_instruction( $form_id, $wpautop = false ) {
 			$settings_url
 		);
 
-	$offline_instructions = give_do_email_tags( $offline_instructions, null );
+	$offline_instructions = give_do_email_tags( $offline_instructions, ['form_id' => $form_id ] );
 
 	$formmated_offline_instructions = $wpautop
 		? wpautop( do_shortcode( $offline_instructions ) )
@@ -473,8 +473,7 @@ function give_filter_offline_gateway( $gateway_list, $form_id ) {
 add_filter( 'give_enabled_payment_gateways', 'give_filter_offline_gateway', 10, 2 );
 
 /**
- * Set default gateway to global default payment gateway
- * if current default gateways selected offline and offline payment gateway is disabled.
+ * Set default gateway to global default payment gateway if current default gateways selected offline and offline payment gateway is disabled.
  *
  * @since 1.8
  *

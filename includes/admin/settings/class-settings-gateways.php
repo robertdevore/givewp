@@ -43,8 +43,8 @@ if ( ! class_exists( 'Give_Settings_Gateways' ) ) :
 		/**
 		 * Get settings array.
 		 *
-		 * @since  1.8
 		 * @return array
+		 * @since  1.8
 		 */
 		public function get_settings() {
 			$settings        = array();
@@ -144,7 +144,7 @@ if ( ! class_exists( 'Give_Settings_Gateways' ) ) :
 						),
 						array(
 							'name'    => __( 'Offline Donation Instructions', 'give' ),
-							'desc'    => __( 'The following content will appear for all forms when the user selects the offline donation payment option. Note: You may customize the content per form as needed.', 'give' ),
+							'desc'    => __( 'The following content will display when the user selects the Offline Donation payment option. Note: You may customize the content per form as needed.', 'give' ) . '<br>' . __( 'List of available template tags:', 'give' ) . '<br>' . '<ul class="give-email-tags-wrap"><li><code><a href="' . admin_url('edit.php?post_type=give_forms&page=give-settings&tab=emails&section=contact'). '" target="_blank">{offline_mailing_address}</a></code> - The address you would like donation payments to be mailed to.</li><li><code>{sitename}</code> - The name of your site.</li><li><code>{form_title}</code> - The title of the donation form the donor gave to.</li></ul>',
 							'id'      => 'global_offline_donation_content',
 							'default' => give_get_default_offline_donation_content(),
 							'type'    => 'wysiwyg',
@@ -245,9 +245,10 @@ if ( ! class_exists( 'Give_Settings_Gateways' ) ) :
 			/**
 			 * Filter the settings.
 			 *
+			 * @param array $settings
+			 *
 			 * @since  1.8
 			 *
-			 * @param  array $settings
 			 */
 			$settings = apply_filters( 'give_get_settings_' . $this->id, $settings );
 
@@ -258,8 +259,8 @@ if ( ! class_exists( 'Give_Settings_Gateways' ) ) :
 		/**
 		 * Get sections.
 		 *
-		 * @since 1.8
 		 * @return array
+		 * @since 1.8
 		 */
 		public function get_sections() {
 			$sections = array(
@@ -275,11 +276,12 @@ if ( ! class_exists( 'Give_Settings_Gateways' ) ) :
 		/**
 		 * Render Gateway Notice
 		 *
+		 * @param $field
+		 * @param $settings
+		 *
 		 * @since  2.3.0
 		 * @access public
 		 *
-		 * @param $field
-		 * @param $settings
 		 */
 		public function render_gateway_notice( $field, $settings ) {
 
@@ -337,11 +339,12 @@ if ( ! class_exists( 'Give_Settings_Gateways' ) ) :
 		/**
 		 * Render enabled gateways
 		 *
+		 * @param $field
+		 * @param $settings
+		 *
 		 * @since  2.0.5
 		 * @access public
 		 *
-		 * @param $field
-		 * @param $settings
 		 */
 		public function render_enabled_gateways( $field, $settings ) {
 			$id              = $field['id'];
