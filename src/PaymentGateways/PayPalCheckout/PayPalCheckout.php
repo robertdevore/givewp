@@ -3,6 +3,7 @@
 namespace Give\PaymentGateways\PayPalCheckout;
 
 use Give\PaymentGateways\PaymentGateway;
+use Give_Admin_Settings;
 
 class PayPalCheckout implements PaymentGateway {
 	/**
@@ -53,6 +54,22 @@ class PayPalCheckout implements PaymentGateway {
 	 * @inheritDoc
 	 */
 	public function boot() {
-		// TODO: Implement boot() method.
+		add_action( 'admin_enqueue_scripts', [ $this, 'loadAdminScripts' ] );
+	}
+
+	/**
+	 * Load admin scripts
+	 *
+	 * @since 2.8.0
+	 */
+	public function loadAdminScripts() {
+		if ( Give_Admin_Settings::is_setting_page( 'gateway', 'paypal' ) ) {
+			wp_enqueue_script(
+				'paypal-partner-js',
+				'https://www.sandbox.paypal.com/webapps/merchantboarding/js/lib/lightbox/partner.js',
+				[],
+				null
+			);
+		}
 	}
 }
