@@ -1,6 +1,12 @@
 <?php
 namespace Give\PaymentGateways\PayPalCheckout;
 
+/**
+ * Class AdminSettingFields
+ * @package Give\PaymentGateways\PayPalCheckout
+ *
+ * @since 2.8.0
+ */
 class AdminSettingFields {
 	/**
 	 * Bootstrap fields.
@@ -47,10 +53,10 @@ class AdminSettingFields {
 				<p class="label"><?php esc_html_e( 'PayPal Connection', 'give' ); ?></p>
 				<div class="button-wrap connection-setting">
 					<div>
-						<button class="button button-primary button-large">
+						<button class="button button-primary button-large" id="js-give-paypal-on-boarding-handler">
 							<i class="fab fa-paypal"></i>&nbsp;&nbsp;<?php esc_html_e( 'Connect with PayPal', 'give' ); ?>
 						</button>
-						<a class="give-hidden" target="_blank" data-paypal-onboard-complete="onboardedCallback" href="#" data-paypal-button="true">
+						<a class="give-hidden" target="_blank" data-paypal-onboard-complete="givePayPalOnBoardedCallback" href="https://www.sandbox.paypal.com/us/merchantsignup/partner/onboardingentry?token=YmZiOThmMmYtYzAzZi00NDQ5LThhZjktZjk5ZjIwYzA1YzMwVWtockdFT2pFcExEbldBUzZ2NGREUmFzTFZ0Y3V0M2cxNXUyS3NIampydz12Mg==" data-paypal-button="true">
 							<?php esc_html_e( 'Sign up for PayPal', 'give' ); ?>
 						</a>
 					</div>
