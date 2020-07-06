@@ -45,14 +45,21 @@ class AdminSettingFields {
 			</div>
 			<div class="connect-button-wrap">
 				<p class="label"><?php esc_html_e( 'PayPal Connection', 'give' ); ?></p>
-				<div class="button-wrap connection-setting" style="display: none">
-					<div><button class="button button-primary button-large"><i class="fab fa-paypal"></i>&nbsp;&nbsp;<?php esc_html_e( 'Connect with PayPal', 'give' ); ?></button></div>
+				<div class="button-wrap connection-setting">
+					<div>
+						<button class="button button-primary button-large">
+							<i class="fab fa-paypal"></i>&nbsp;&nbsp;<?php esc_html_e( 'Connect with PayPal', 'give' ); ?>
+						</button>
+						<a class="give-hidden" target="_blank" data-paypal-onboard-complete="onboardedCallback" href="#" data-paypal-button="true">
+							<?php esc_html_e( 'Sign up for PayPal', 'give' ); ?>
+						</a>
+					</div>
 					<span class="give-field-description">
 						<i class="fa fa-exclamation"></i>
 						<?php esc_html_e( 'PayPal is currently NOT connected.', 'give' ); ?>
 					</span>
 				</div>
-				<div class="button-wrap disconnection-setting">
+				<div class="button-wrap disconnection-setting" style="display: none">
 					<div><button class="button button-large disabled" disabled="disabled"><i class="fab fa-paypal"></i>&nbsp;&nbsp;<?php esc_html_e( 'Connected', 'give' ); ?></button></div>
 					<div>
 						<span class="give-field-description">
