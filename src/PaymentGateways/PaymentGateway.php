@@ -42,6 +42,14 @@ interface PaymentGateway {
 	 * Get payment gateway options
 	 *
 	 * @return array
+	 * @since 2.8.0
 	 */
 	public function getOptions();
+
+	/**
+	 * Bootstrap payment gateway
+	 *
+	 * 2since 2.8.0
+	 */
+	public function boot();
 }
