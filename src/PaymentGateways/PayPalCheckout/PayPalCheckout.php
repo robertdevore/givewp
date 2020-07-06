@@ -48,4 +48,11 @@ class PayPalCheckout implements PaymentGateway {
 			],
 		];
 	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function boot() {
+		// TODO: Implement boot() method.
+	}
 }
