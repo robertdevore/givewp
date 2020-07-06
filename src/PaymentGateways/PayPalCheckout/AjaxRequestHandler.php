@@ -15,7 +15,7 @@ class AjaxRequestHandler {
 	 * @since 2.8.0
 	 */
 	public function boot() {
-		add_action( 'wp_ajax_give_paypal_checkout_user_onboarded', [ $this, 'onBoardedUserAjaxRequestHandler' ] );
+		add_action( 'wp_ajax_give_paypal_checkout_user_on_boarded', [ $this, 'onBoardedUserAjaxRequestHandler' ] );
 		add_action( 'wp_ajax_give_paypal_checkout_get_partner_url', [ $this, 'onGetPartnerUrlAjaxRequestHandler' ] );
 	}
 

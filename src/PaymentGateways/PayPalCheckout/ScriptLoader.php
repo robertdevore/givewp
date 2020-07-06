@@ -38,23 +38,16 @@ class ScriptLoader {
 			);
 
 			$script = <<<EOT
-				function givePayPalOnBoardedCallback(authCode, sharedId) {
-					console.log('paypal link clicked');
-					fetch( ajaxurl + '?action=give_paypal_checkout_user_onboarded&_wpnonce={$nonce}&displayMode=minibrowser', {
-						method: 'POST',
-						headers: {
-							'content-type': 'application/json'
-						},
-						body: JSON.stringify({
-							authCode: authCode,
-							sharedId: sharedId
-						})
-					}).then(function(res) {
-						if (!response.ok) {
-							alert("Something went wrong!");
-							}
-					});
-				}
+				(function(d, s, id) {
+					var js, ref = d.getElementsByTagName(s)[0];
+					if (!d.getElementById(id)) {
+						js = d.createElement(s);
+						js.id = id;
+						js.async = true;
+						js.src = "https://www.paypal.com/webapps/merchantboarding/js/lib/lightbox/partner.js";
+						ref.parentNode.insertBefore(js, ref);
+						}
+				}(document, "script", "paypal-js"));
 EOT;
 
 			wp_add_inline_script(

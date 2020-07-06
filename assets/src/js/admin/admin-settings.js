@@ -365,7 +365,7 @@ document.addEventListener( 'DOMContentLoaded', () => {
 				if ( true === res.success ) {
 					const payPalLink = document.querySelector( '[data-paypal-button]' );
 
-					payPalLink.href = res.data.partnerLink;
+					payPalLink.href = `${ res.data.partnerLink }&displayMode=minibrowser`;
 					payPalLink.click();
 				}
 			}
