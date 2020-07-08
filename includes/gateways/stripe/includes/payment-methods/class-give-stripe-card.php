@@ -224,9 +224,9 @@ if ( ! class_exists( 'Give_Stripe_Card' ) ) {
 					try {
 
 						$source    = \Stripe\Source::create(
-							array(
+							[
 								'card' => $card_data,
-							)
+							]
 						);
 						$source_id = $source->id;
 
@@ -270,7 +270,7 @@ if ( ! class_exists( 'Give_Stripe_Card' ) ) {
 		 */
 		public function prepare_card_data( $donation_data ) {
 
-			$card_data = array(
+			$card_data = [
 				'number'          => $donation_data['card_info']['card_number'],
 				'name'            => $donation_data['card_info']['card_name'],
 				'exp_month'       => $donation_data['card_info']['card_exp_month'],
@@ -282,7 +282,7 @@ if ( ! class_exists( 'Give_Stripe_Card' ) ) {
 				'address_zip'     => $donation_data['card_info']['card_zip'],
 				'address_state'   => $donation_data['card_info']['card_state'],
 				'address_country' => $donation_data['card_info']['card_country'],
-			);
+			];
 
 			return $card_data;
 		}
@@ -345,7 +345,7 @@ if ( ! class_exists( 'Give_Stripe_Card' ) ) {
 					$payment_method_id = $payment_method->id;
 
 					// Setup the payment details.
-					$payment_data = array(
+					$payment_data = [
 						'price'           => $donation_data['price'],
 						'give_form_title' => $donation_data['post_data']['give-form-title'],
 						'give_form_id'    => $form_id,
@@ -357,7 +357,7 @@ if ( ! class_exists( 'Give_Stripe_Card' ) ) {
 						'user_info'       => $donation_data['user_info'],
 						'status'          => give_stripe_is_preapproved_enabled() ? 'preapproval' : 'pending',
 						'gateway'         => $this->id,
-					);
+					];
 
 					// Record the pending payment in Give.
 					$donation_id = give_insert_payment( $payment_data );
@@ -401,10 +401,10 @@ if ( ! class_exists( 'Give_Stripe_Card' ) ) {
 					 */
 					$intent_args = apply_filters(
 						'give_stripe_create_intent_args',
-						array(
+						[
 							'amount'               => $this->format_amount( $donation_data['price'] ),
 							'currency'             => give_get_currency( $form_id ),
-							'payment_method_types' => array( 'card' ),
+							'payment_method_types' => [ 'card' ],
 							'statement_descriptor' => give_stripe_get_statement_descriptor(),
 							'description'          => give_payment_gateway_donation_summary( $donation_data ),
 							'metadata'             => $this->prepare_metadata( $donation_id, $donation_data ),
@@ -412,7 +412,7 @@ if ( ! class_exists( 'Give_Stripe_Card' ) ) {
 							'payment_method'       => $payment_method_id,
 							'confirm'              => true,
 							'return_url'           => give_get_success_page_uri(),
-						)
+						]
 					);
 
 					// Send Stripe Receipt emails when enabled.
@@ -433,12 +433,12 @@ if ( ! class_exists( 'Give_Stripe_Card' ) ) {
 					// Process additional steps for SCA or 3D secure.
 					give_stripe_process_additional_authentication( $donation_id, $intent );
 
-					if ( ! empty( $intent->status ) && in_array( $intent->status, ['succeeded', 'requires_capture' ] ) ) {
+					if ( ! empty( $intent->status ) && in_array( $intent->status, [ 'succeeded', 'requires_capture' ] ) ) {
 						// Process to success page, only if intent is successful or requires capture.
 						give_send_to_success_page();
 					} else {
 						// Show error message instead of confirmation page.
-					 	give_send_back_to_checkout( '?payment-mode=' . give_clean( $_GET['payment-mode'] ) );
+						give_send_back_to_checkout( '?payment-mode=' . give_clean( $_GET['payment-mode'] ) );
 					}
 				} else {
 
