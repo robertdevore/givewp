@@ -355,7 +355,7 @@ if ( ! class_exists( 'Give_Stripe_Card' ) ) {
 						'purchase_key'    => $donation_data['purchase_key'],
 						'currency'        => give_get_currency( $form_id ),
 						'user_info'       => $donation_data['user_info'],
-						'status'          => 'pending',
+						'status'          => give_stripe_is_preapproved_enabled() ? 'preapproval' : 'pending',
 						'gateway'         => $this->id,
 					);
 
@@ -433,12 +433,12 @@ if ( ! class_exists( 'Give_Stripe_Card' ) ) {
 					// Process additional steps for SCA or 3D secure.
 					give_stripe_process_additional_authentication( $donation_id, $intent );
 
-					if ( ! empty( $intent->status ) && 'succeeded' === $intent->status ) {
-						// Process to success page, only if intent is successful.
+					if ( ! empty( $intent->status ) && in_array( $intent->status, ['succeeded', 'requires_capture' ] ) ) {
+						// Process to success page, only if intent is successful or requires capture.
 						give_send_to_success_page();
 					} else {
 						// Show error message instead of confirmation page.
-						give_send_back_to_checkout( '?payment-mode=' . give_clean( $_GET['payment-mode'] ) );
+					 	give_send_back_to_checkout( '?payment-mode=' . give_clean( $_GET['payment-mode'] ) );
 					}
 				} else {
 
