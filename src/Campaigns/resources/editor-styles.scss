@@ -15,6 +15,15 @@
 	.edit-post-visual-editor.editor-styles-wrapper {
 		background-color: #f1f1f1;
 	}
+
+	/* Distinguish post title has non-presentational */
+	.editor-post-title__block .editor-post-title__input {
+		height: auto;
+		width: 100%;
+		text-align: left;
+		font-size: 45px;
+		font-weight: 500;
+	}
 }
 
 .wp-block[data-type='give/campaign-progress'] {
